@@ -25,9 +25,8 @@
     },
     "files": [
       "**/*",
-      "bundle.js",
       "!bundle.js.map",
-      "!**/{.c9,scss,docs,test,tests,devtools,plugins,examples}${/*}",
+      "!package-lock.json",
       "!src/*",
       "src/main/*",
       "!node_modules${/*}"
