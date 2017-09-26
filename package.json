@@ -1,0 +1,55 @@
+{
+  "name": "peacock",
+  "productName": "Peacock",
+  "version": "0.1.0",
+  "description": "A color palette manager.",
+  "author": "Yichuan Shen <shen.yichuan@gmail.com>",
+  "homepage": "https://github.com/yishn/Peacock",
+  "license": "MIT",
+  "main": "./src/main/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yishn/Peacock"
+  },
+  "bugs": {
+    "url": "https://github.com/yishn/Peacock/issues"
+  },
+  "build": {
+    "appId": "de.yichuanshen.peacock",
+    "copyright": "Copyright © 2017 Yichuan Shen",
+    "compression": "maximum",
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "**/*",
+      "bundle.js",
+      "!bundle.js.map",
+      "!**/{.c9,scss,docs,test,tests,devtools,plugins,examples}${/*}",
+      "!src/*",
+      "src/main/*",
+      "!node_modules${/*}"
+    ]
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "preact": "^8.2.5"
+  },
+  "devDependencies": {
+    "electron": "^1.7.8",
+    "electron-builder": "^19.31.1",
+    "webpack": "^3.6.0"
+  },
+  "scripts": {
+    "start": "electron ./",
+    "bundle": "webpack --progress",
+    "watch": "webpack --progress --watch",
+    "build": "npm run bundle && build --dir",
+    "dist:macos": "npm run bundle && build -m --x64",
+    "dist:linux": "npm run bundle && build -l --ia32 --x64",
+    "dist:win32": "npm run bundle && build -w --ia32",
+    "dist:win64": "npm run bundle && build -w --x64"
+  }
+}
