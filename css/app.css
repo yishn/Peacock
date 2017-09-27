@@ -11,12 +11,12 @@ html, body {
     height: 100%;
     overflow: hidden;
     background: #111;
-    color: #eee;
+    color: #ddd;
 }
 
 body, input, button, select, option, textarea {
     font: menu;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.5;
 }
 

@@ -1,0 +1,28 @@
+#root {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.palette-list {
+        padding: 1px 0;
+        list-style: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .palette-list > li {
+        margin: 2.5em 0;
+    }
+    .palette-list > li h3 {
+        margin-top: 5px;
+        padding: 0 1em;
+        font-weight: normal;
+}
+
+.palette {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    height: 50px;
+    list-style: none;
+}

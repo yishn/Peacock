@@ -10,6 +10,83 @@ try { fs.mkdirSync(exports.userDataDirectory) } catch (err) {}
 
 let settings = {}
 let defaults = {
+    'data.palettes': [
+        {
+            name: 'Thought Provoking',
+            colors: [
+                {
+                    hex: '#ECD078',
+                    variants: []
+                },
+                {
+                    hex: '#D95B43',
+                    variants: []
+                },
+                {
+                    hex: '#C02942',
+                    variants: []
+                },
+                {
+                    hex: '#542437',
+                    variants: []
+                },
+                {
+                    hex: '#53777A',
+                    variants: []
+                }
+            ]
+        },
+        {
+            name: 'Thought Provoking 2',
+            colors: [
+                {
+                    hex: '#ECD078',
+                    variants: []
+                },
+                {
+                    hex: '#D95B43',
+                    variants: []
+                },
+                {
+                    hex: '#C02942',
+                    variants: []
+                },
+                {
+                    hex: '#542437',
+                    variants: []
+                },
+                {
+                    hex: '#53777A',
+                    variants: []
+                }
+            ]
+        },
+        {
+            name: 'Thought Provoking 3',
+            colors: [
+                {
+                    hex: '#ECD078',
+                    variants: []
+                },
+                {
+                    hex: '#D95B43',
+                    variants: []
+                },
+                {
+                    hex: '#C02942',
+                    variants: []
+                },
+                {
+                    hex: '#542437',
+                    variants: []
+                },
+                {
+                    hex: '#53777A',
+                    variants: []
+                }
+            ]
+        }
+    ],
     'debug.devtools': false,
     'window.height': 500,
     'window.minheight': 300,

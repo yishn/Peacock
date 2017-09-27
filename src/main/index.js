@@ -15,7 +15,8 @@ app.on('ready', () => {
         minHeight: setting.get('window.minheight'),
         useContentSize: true,
         center: true,
-        show: false
+        show: false,
+        backgroundColor: '#111'
     })
 
     if (setting.get('debug.devtools')) {
