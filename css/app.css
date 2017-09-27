@@ -1,0 +1,71 @@
+/**
+ * Provides general styles for native app like behavior.
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    background: #111;
+    color: #eee;
+}
+
+body, input, button, select, option, textarea {
+    font: menu;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+body, a {
+    cursor: default;
+    outline: 0;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+pre, code {
+    font: 14px/1.3 Consolas, Menlo, Monaco, 'Ubuntu Mono', monospace;
+}
+
+#root {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+a, img {
+    user-drag: none;
+    -webkit-user-drag: none;
+    object-fit: contain;
+}
+
+img {
+    vertical-align: bottom;
+}
+
+/**
+ * Scrollbars
+ */
+
+::-webkit-scrollbar {
+        height: 8px;
+        width: 8px;
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #393939;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #494949;
+    }
+    ::-webkit-scrollbar-corner {
+        background: transparent;
+}
