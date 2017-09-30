@@ -27,15 +27,38 @@
 }
 
 .palette-list {
+        position: relative;
+    }
+    .palette-list .shadow {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 2.5em;
+        background: linear-gradient(to bottom, #111, transparent);
+        opacity: .7;
+        pointer-events: none;
+    }
+    .palette-list .shadow.bottom {
+        top: auto;
+        bottom: 0;
+        background: linear-gradient(to top, #111, transparent);
+    }
+    .palette-list > ul {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         padding: 1px 0;
         list-style: none;
         overflow-x: hidden;
         overflow-y: auto;
     }
-    .palette-list > li {
+    .palette-list > ul > li {
         margin: 2.5em 0;
     }
-    .palette-list > li h3 {
+    .palette-list > ul > li h3 {
         margin-top: 5px;
         padding: 0 1em;
         font-weight: normal;
