@@ -16,7 +16,7 @@ html, body {
 
 body, input, button, select, option, textarea {
     font: menu;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.5;
 }
 
@@ -49,6 +49,32 @@ a, img {
 
 img {
     vertical-align: bottom;
+}
+
+/**
+ * Forms
+ */
+
+input {
+    border: none;
+    outline: none;
+    color: inherit;
+    font: inherit;
+}
+
+input[type="text"],
+input[type="search"] {
+        background: #333;
+        padding: .2em .5em;
+    }
+    input[type="text"]:focus,
+    input[type="search"]:focus {
+        background: #444;
+}
+
+input[type="search"] {
+    border-radius: 2em;
+    padding: .2em .8em;
 }
 
 /**
