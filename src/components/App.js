@@ -5,6 +5,7 @@ import mutate from '../renderer/mutate'
 
 import FilterPanel from './FilterPanel'
 import FilterPaletteList from './FilterPaletteList'
+import Toolbar, {ToolbarButton} from './Toolbar'
 
 const setting = remote.require('./setting')
 
@@ -182,7 +183,14 @@ export default class App extends Component {
                 h(FilterPaletteList, {
                     palettes: this.state.palettes,
                     filter: this.state.filter
-                })
+                }),
+
+                h(Toolbar, {},
+                    h(ToolbarButton, {
+                        text: 'Add Palette…',
+                        icon: './img/add.svg'
+                    })
+                )
             )
         )
     }

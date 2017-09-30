@@ -9,7 +9,7 @@
 #browse {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 1fr auto;
 }
 
 .filter-panel {
@@ -48,4 +48,36 @@
     grid-auto-flow: column;
     height: 50px;
     list-style: none;
+}
+
+.toolbar {
+        background: #222;
+    }
+    .toolbar > ul {
+        display: table;
+        margin: 0 auto;
+        list-style: none;
+        overflow: hidden;
+    }
+    .toolbar > ul > li {
+        float: left;
+    }
+    .toolbar > ul > li a {
+        display: block;
+        padding: .5em 1em;
+    }
+    .toolbar > ul > li a:focus {
+        background: #444;
+    }
+    .toolbar > ul > li a:hover {
+        background: #0050C0;
+    }
+    .toolbar > ul > li a:active {
+        background: #0030A0;
+    }
+    .toolbar > ul > li img {
+        display: block;
+        width: 12px;
+        height: 12px;
+        filter: invert(100%);
 }
