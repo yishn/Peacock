@@ -13,18 +13,16 @@
 }
 
 .filter-panel {
-        padding: 1em;
+        padding: 1px 1em;
         background: #222;
     }
     .filter-panel ul {
         list-style: none;
     }
     .filter-panel ul > li {
-        margin: .5em 0;
+        margin: 1em 0;
     }
     .filter-panel .text input {
-        border: none;
-        outline: none;
         width: 100%;
 }
 

@@ -64,11 +64,13 @@ input {
 
 input[type="text"],
 input[type="search"] {
+        border: 2px solid transparent;
         background: #333;
         padding: .2em .5em;
     }
     input[type="text"]:focus,
     input[type="search"]:focus {
+        border: 2px solid #568AF2;
         background: #444;
 }
 
