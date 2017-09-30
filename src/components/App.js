@@ -1,8 +1,10 @@
 import {remote} from 'electron'
 import {h, Component} from 'preact'
 
+import mutate from '../renderer/mutate'
+
 import FilterPanel from './FilterPanel'
-import PaletteList from './PaletteList'
+import FilterPaletteList from './FilterPaletteList'
 
 const setting = remote.require('./setting')
 
@@ -90,17 +92,25 @@ export default class App extends Component {
                 text: ''
             }
         }
+
+        this.handleFilterChange = this.handleFilterChange.bind(this)
+    }
+
+    handleFilterChange(evt) {
+        this.setState(({filter}) => ({filter: mutate(filter, evt)}))
     }
 
     render() {
         return h('div', {id: 'root'},
             h('section', {id: 'browse', class: 'page'},
                 h(FilterPanel, {
-                    text: this.state.filter.text
+                    text: this.state.filter.text,
+                    onChange: this.handleFilterChange
                 }),
 
-                h(PaletteList, {
-                    palettes: this.state.palettes
+                h(FilterPaletteList, {
+                    palettes: this.state.palettes,
+                    filter: this.state.filter
                 })
             )
         )
