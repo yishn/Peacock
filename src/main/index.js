@@ -16,7 +16,10 @@ app.on('ready', () => {
         useContentSize: true,
         center: true,
         show: false,
-        backgroundColor: '#111'
+        backgroundColor: '#111',
+        webPreferences: {
+            nodeIntegrationInWorker: true
+        }
     })
 
     if (setting.get('debug.devtools')) {
