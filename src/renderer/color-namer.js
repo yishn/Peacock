@@ -3,7 +3,7 @@ let cache = {}
 
 export default function colorNamer(color) {
     return new Promise(resolve => {
-        if (color in cache) {
+        if (color in cache && cache[color] != null) {
             return resolve(cache[color])
         }
 
@@ -15,7 +15,11 @@ export default function colorNamer(color) {
             resolve(evt.data.name)
         }
 
-        worker.postMessage(color)
+        if (!(color in cache)) {
+            cache[color] = null
+            worker.postMessage(color)
+        }
+
         worker.addEventListener('message', handleMessage)
     })
 }
