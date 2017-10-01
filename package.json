@@ -29,6 +29,7 @@
       "!package-lock.json",
       "!src/*",
       "src/main/*",
+      "src/workers/*",
       "!node_modules${/*}"
     ]
   },

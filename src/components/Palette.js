@@ -26,7 +26,7 @@ export class PaletteColor extends Component {
 
     render() {
         return h('li', {
-            title: [this.state.name, this.props.color].join('\n'),
+            title: [this.state.name || '', this.props.color].join('\n').trim(),
             style: {background: this.props.color}
         })
     }

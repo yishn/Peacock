@@ -1,4 +1,4 @@
-let worker = new Worker('./src/renderer/color-namer-worker.js')
+let worker = new Worker('./src/workers/color-namer-worker.js')
 let cache = {}
 
 export default function colorNamer(color) {
