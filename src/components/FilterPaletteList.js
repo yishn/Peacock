@@ -7,8 +7,10 @@ export default class FilterPaletteList extends Component {
     render() {
         return h(PaletteList, Object.assign({}, this.props, {
             filter: undefined,
-            palettes: this.props.palettes.filter(palette =>
+            palettes: this.props.palettes.map(palette =>
                 palette.name.toLowerCase().includes(this.props.filter.text.trim())
+                ? palette
+                : null
             )
         }))
     }

@@ -5,8 +5,8 @@ import Palette from './Palette'
 export default class PaletteList extends Component {
     render() {
         return h('section', {class: 'palette-list'},
-            h('ul', {}, this.props.palettes.map(palette =>
-                h('li', {},
+            h('ul', {}, this.props.palettes.map((palette, i) =>
+                palette && h('li', {key: i},
                     h(Palette, {
                         colors: palette.colors.map(x => x.hex)
                     }),
