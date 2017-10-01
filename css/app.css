@@ -66,6 +66,7 @@ input[type="search"] {
         border: 2px solid transparent;
         background: #333;
         padding: .2em .5em;
+        transition: border .1s;
     }
     input[type="text"]:focus,
     input[type="search"]:focus {

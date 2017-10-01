@@ -4,40 +4,39 @@ import Component from './PureComponent'
 import namer from '../renderer/color-namer'
 import mutate from '../renderer/mutate'
 
-export default class Palette extends Component {
+export class PaletteColor extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            colorNames: []
+            name: null
         }
-
-        this.componentWillReceiveProps(this.props)
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({colorNames: [...nextProps.colors].map(_ => null)})
-        this.getColorNames()
+    componentDidMount() {
+        this.componentDidUpdate({})
     }
 
-    getColorNames() {
-        for (let i = 0; i < this.props.colors.length; i++) {
-            namer(this.props.colors[i])
-            .then(name => {
-                this.setState(({colorNames}) => ({
-                    colorNames: mutate(colorNames, {[i]: name})
-                }))
-            })
-        }
+    componentDidUpdate(prevProps) {
+        if (prevProps.color === this.props.color) return
+
+        this.setState({name: null})
+        namer(this.props.color).then(name => this.setState({name}))
     }
 
     render() {
+        return h('li', {
+            title: [this.state.name, this.props.color].join('\n'),
+            style: {background: this.props.color}
+        })
+    }
+}
+
+export default class Palette extends Component {
+    render() {
         return h('ul', {class: 'palette'},
-            this.props.colors.map((color, i) =>
-                h('li', {
-                    title: this.state.colorNames[i],
-                    style: {background: color}
-                })
+            this.props.colors.map(color =>
+                h(PaletteColor, {key: color, color})
             )
         )
     }
