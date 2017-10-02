@@ -4,6 +4,7 @@
     top: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 #browse {
@@ -34,7 +35,7 @@
         left: 0;
         top: 0;
         right: 0;
-        height: 2.5em;
+        height: 20px;
         background: linear-gradient(to bottom, #111, transparent);
         opacity: .7;
         pointer-events: none;
@@ -48,21 +49,44 @@
         position: absolute;
         top: 0;
         left: 0;
-        bottom: 0;
-        right: 0;
-        padding: 1px 0;
+        width: 100%;
+        height: 100%;
         list-style: none;
         overflow-x: hidden;
         overflow-y: auto;
     }
-    .palette-list > ul > li {
-        margin: 2.5em 0;
+    .palette-list.measure > ul {
+        opacity: 0;
+        pointer-events: none;
     }
-    .palette-list > ul > li h3 {
-        margin-top: 5px;
+    .palette-list .placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        opacity: 0;
+        pointer-events: none;
+    }
+    .palette-list .item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 1.3em 0;
+    }
+    .palette-list .item .name {
+        height: 1.5em;
         padding: 0 1em;
+        margin-top: 5px;
+        overflow: hidden;
         font-weight: normal;
         font-size: 1em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .palette-list .item .name a:hover {
+        border-bottom: 1px solid #666;
+        cursor: pointer;
 }
 
 .palette {

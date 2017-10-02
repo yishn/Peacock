@@ -89,75 +89,100 @@ export default class App extends Component {
                     ]
                 },
                 {
-                    name: 'Thought Provoking',
+                    name: 'Ocean Five',
                     colors: [
                         {
-                            hex: '#ECD078',
+                            hex: '#00a0b0',
                             variants: []
                         },
                         {
-                            hex: '#D95B43',
+                            hex: '#6a4a3c',
                             variants: []
                         },
                         {
-                            hex: '#C02942',
+                            hex: '#cc333f',
                             variants: []
                         },
                         {
-                            hex: '#542437',
+                            hex: '#eb6841',
                             variants: []
                         },
                         {
-                            hex: '#53777A',
+                            hex: '#edc951',
                             variants: []
                         }
                     ]
                 },
                 {
-                    name: 'Odd Flavor Combos',
+                    name: 'Giant Goldfish',
                     colors: [
                         {
-                            hex: '#B85323',
+                            hex: '#69d2e7',
                             variants: []
                         },
                         {
-                            hex: '#ED6E35',
+                            hex: '#a7dbd8',
                             variants: []
                         },
                         {
-                            hex: '#FCA75A',
+                            hex: '#e0e4cc',
                             variants: []
                         },
                         {
-                            hex: '#FCB778',
+                            hex: '#f38630',
                             variants: []
                         },
                         {
-                            hex: '#F1F2D4',
+                            hex: '#fa6900',
                             variants: []
                         }
                     ]
                 },
                 {
-                    name: 'Red Poppy Fabric',
+                    name: 'Adrift in Dreams',
                     colors: [
                         {
-                            hex: '#F3DDC6',
+                            hex: '#cff09e',
                             variants: []
                         },
                         {
-                            hex: '#FE7356',
+                            hex: '#a8dba8',
                             variants: []
                         },
                         {
-                            hex: '#E13F3C',
+                            hex: '#79bd9a',
                             variants: []
                         },
                         {
-                            hex: '#8A4F41',
+                            hex: '#3b8686',
+                            variants: []
+                        },
+                        {
+                            hex: '#0b486b',
                             variants: []
                         }
                     ]
+                },
+                {
+                    name: 'Mellon Ball Surprise',
+                    colors: [
+                        {
+                            hex: '#d1f2a5',
+                            variants: []
+                        },
+                        {
+                            hex: '#ffc48c',
+                            variants: []
+                        },
+                        {
+                            hex: '#ff9f80',
+                            variants: []
+                        },
+                        {
+                            hex: '#f56991',
+                            variants: []
+                        }
+                    ].reverse()
                 }
             ],
             filter: {
@@ -182,7 +207,8 @@ export default class App extends Component {
 
                 h(FilterPaletteList, {
                     palettes: this.state.palettes,
-                    filter: this.state.filter
+                    filter: this.state.filter,
+                    onItemClick: console.log
                 }),
 
                 h(Toolbar, {},
