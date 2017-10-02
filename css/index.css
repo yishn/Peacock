@@ -74,7 +74,7 @@
         right: 0;
         padding: 1.3em 0;
     }
-    .palette-list .item .name {
+    .palette-list .name {
         height: 1.5em;
         padding: 0 1em;
         margin-top: 5px;
@@ -84,7 +84,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .palette-list .item .name a:hover {
+    .palette-list .name a:hover, .palette-list .name a:focus {
         border-bottom: 1px solid #666;
         cursor: pointer;
 }
@@ -101,8 +101,6 @@
         background: #222;
     }
     .toolbar > ul {
-        display: table;
-        margin: 0 auto;
         list-style: none;
         overflow: hidden;
     }

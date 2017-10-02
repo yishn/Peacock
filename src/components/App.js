@@ -183,6 +183,31 @@ export default class App extends Component {
                             variants: []
                         }
                     ].reverse()
+                },
+                {
+                    name: 'Sunset Sails',
+                    colors: [
+                        {
+                            hex: '#fff0ab',
+                            variants: []
+                        },
+                        {
+                            hex: '#ecd64c',
+                            variants: []
+                        },
+                        {
+                            hex: '#ff8544',
+                            variants: []
+                        },
+                        {
+                            hex: '#7d5f43',
+                            variants: []
+                        },
+                        {
+                            hex: '#26171e',
+                            variants: []
+                        }
+                    ]
                 }
             ],
             filter: {
