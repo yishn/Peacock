@@ -43,6 +43,9 @@
         opacity: .7;
         transition: opacity .2s, border-color .2s;
     }
+    .filter-panel .hue > ul > li:last-child {
+        margin-right: 0;
+    }
     .filter-panel .hue > ul > li.current {
         border-color: #568AF2;
         opacity: 1;
