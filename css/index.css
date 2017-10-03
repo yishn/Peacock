@@ -17,14 +17,41 @@
         padding: 1px 1em;
         background: #222;
     }
-    .filter-panel ul {
+    .filter-panel > ul {
         list-style: none;
     }
-    .filter-panel ul > li {
+    .filter-panel > ul > li {
         margin: 1em 0;
     }
     .filter-panel .text input {
         width: 100%;
+    }
+    .filter-panel .hue > ul {
+        display: table;
+        vertical-align: middle;
+        margin: 0 auto;
+        list-style: none;
+    }
+    .filter-panel .hue > ul > li {
+        display: inline-block;
+        border: 2px solid #222;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        margin-bottom: -2px;
+        margin-right: 5px;
+        opacity: .7;
+        transition: opacity .2s, border-color .2s;
+    }
+    .filter-panel .hue > ul > li.current {
+        border-color: #568AF2;
+        opacity: 1;
+    }
+    .filter-panel .hue > ul > li:hover {
+        opacity: 1;
+    }
+    .filter-panel .hue > ul > li.none {
+        background: url('../img/huecross.svg') center / 10px 10px no-repeat;
 }
 
 .palette-list {

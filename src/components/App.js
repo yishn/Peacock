@@ -211,7 +211,8 @@ export default class App extends Component {
                 }
             ],
             filter: {
-                text: ''
+                text: '',
+                hue: null
             }
         }
 
@@ -227,6 +228,7 @@ export default class App extends Component {
             h('section', {id: 'browse', class: 'page'},
                 h(FilterPanel, {
                     text: this.state.filter.text,
+                    hue: this.state.filter.hue,
                     onChange: this.handleFilterChange
                 }),
 
