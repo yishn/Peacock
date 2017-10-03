@@ -74,28 +74,6 @@ export default class PaletteList extends Component {
 
     render() {
         let needMeasure = this.state.itemHeight == null
-        let {list, count} = this.props.palettes.reduce(({list, count}, palette, i) => {
-            if (palette == null)
-                return {list, count}
-
-            let top = count * this.state.itemHeight
-            let bottom = top + this.state.itemHeight
-            let scrollBottom = this.state.scrollTop + this.state.listHeight
-
-            if (bottom < this.state.scrollTop || top > scrollBottom)
-                return {list, count: count + 1}
-
-            list.push(h(PaletteListItem, {
-                key: i,
-                index: i,
-                name: palette.name,
-                colors: palette.colors.map(x => x.hex),
-                style: {top},
-                onClick: this.props.onItemClick
-            }))
-
-            return {list, count: count + 1}
-        }, {list: [], count: 0})
 
         return h('section',
             {
@@ -123,11 +101,32 @@ export default class PaletteList extends Component {
                         key: 'placeholder',
                         class: 'placeholder',
                         style: {
-                            height: this.state.itemHeight * count
+                            height: this.state.itemHeight * this.props.palettes.length
                         }
                     }),
 
-                    list
+                    (() => {
+                        let list = []
+                        let scrollBottom = this.state.scrollTop + this.state.listHeight
+                        let start = Math.ceil(this.state.scrollTop / this.state.itemHeight) - 1
+                        let end = Math.floor(scrollBottom / this.state.itemHeight) + 1
+
+                        for (let i = Math.max(start, 0); i < Math.min(end, this.props.palettes.length); i++) {
+                            let palette = this.props.palettes[i]
+                            let top = i * this.state.itemHeight
+
+                            list.push(h(PaletteListItem, {
+                                key: i,
+                                index: i,
+                                name: palette.name,
+                                colors: palette.colors.map(x => x.hex),
+                                style: {top},
+                                onClick: this.props.onItemClick
+                            }))
+                        }
+
+                        return list
+                    })()
                 ]
             ),
 
