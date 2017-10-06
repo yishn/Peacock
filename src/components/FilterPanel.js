@@ -34,25 +34,37 @@ export default class FilterPanel extends Component {
                     })
                 ),
 
-                h('li', {class: 'hue'}, h('ul', {},
-                    h('li', {
-                        class: classNames('none', {current: this.props.hue == null}),
-                        style: {backgroundColor: '#444'},
-                        title: 'None',
-                        'data-hue': 'null',
-                        onClick: this.handleHueClick
-                    }),
+                h('li', {class: 'hue'}, h('ul', {class: 'color-list'},
+                    h('li',
+                        {
+                            class: classNames('none', {
+                                current: this.props.hue == null
+                            })
+                        },
 
-                    colorNamer.lists.roygbiv.map(x => h('li', {
-                        class: classNames({
-                            current: this.props.hue != null
-                                && this.props.hue.toLowerCase() === x.hex.toLowerCase()
-                        }),
-                        style: {backgroundColor: x.hex},
-                        title: x.name[0].toUpperCase() + x.name.slice(1).toLowerCase(),
-                        'data-hue': x.hex,
-                        onClick: this.handleHueClick
-                    }))
+                        h('a', {
+                            style: {backgroundColor: '#444'},
+                            title: 'None',
+                            'data-hue': 'null',
+                            onClick: this.handleHueClick
+                        })
+                    ),
+
+                    colorNamer.lists.roygbiv.map(x => h('li',
+                        {
+                            class: classNames({
+                                current: this.props.hue != null
+                                    && this.props.hue.toLowerCase() === x.hex.toLowerCase()
+                            })
+                        },
+
+                        h('a', {
+                            style: {backgroundColor: x.hex},
+                            title: x.name[0].toUpperCase() + x.name.slice(1).toLowerCase(),
+                            'data-hue': x.hex,
+                            onClick: this.handleHueClick
+                        }))
+                    )
                 ))
             )
         )

@@ -25,35 +25,39 @@
     }
     .filter-panel .text input {
         width: 100%;
-    }
-    .filter-panel .hue > ul {
+}
+
+.color-list {
         display: table;
         vertical-align: middle;
         margin: 0 auto;
         list-style: none;
     }
-    .filter-panel .hue > ul > li {
+    .color-list > li {
         display: inline-block;
-        border: 2px solid #222;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
         margin-bottom: -2px;
         margin-right: 5px;
+    }
+    .color-list > li:last-child {
+        margin-right: 0;
+    }
+    .color-list > li a {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #222;
+        border-radius: 50%;
         opacity: .7;
         transition: opacity .2s, border-color .2s;
     }
-    .filter-panel .hue > ul > li:last-child {
-        margin-right: 0;
-    }
-    .filter-panel .hue > ul > li.current {
+    .color-list > li.current a {
         border-color: #568AF2;
         opacity: 1;
     }
-    .filter-panel .hue > ul > li:hover {
+    .color-list > li a:hover, .color-list > li a:focus {
         opacity: 1;
     }
-    .filter-panel .hue > ul > li.none {
+    .color-list > li.none a {
         background: url('../img/huecross.svg') center / 10px 10px no-repeat;
 }
 
