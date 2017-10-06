@@ -3,9 +3,25 @@ import {h} from 'preact'
 import Component from '../PureComponent'
 
 export default class Page extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            show: props.show
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.show) {
+            this.setState({show: true})
+        } else {
+            setTimeout(() => this.setState({show: false}), this.props.showDelay || 500)
+        }
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         return super.shouldComponentUpdate(nextProps, nextState)
-            && (nextProps.show || nextProps.show !== this.props.show)
+            && (nextState.show || nextState.show !== this.state.show)
     }
 
     render() {
@@ -15,7 +31,7 @@ export default class Page extends Component {
                 class: classNames('page', {show: this.props.show})
             },
 
-            this.props.children
+            this.state.show && this.props.children
         )
     }
 }

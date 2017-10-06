@@ -56,7 +56,7 @@ export default class FilterPaletteList extends Component {
         }
 
         return h(PaletteList, Object.assign({}, this.props, {
-            ref: el => this.listElement = el.listElement,
+            ref: el => this.listElement = el && el.listElement,
             filter: undefined,
             palettes: this.filteredPalettes,
             onItemClick: this.handleItemClick
