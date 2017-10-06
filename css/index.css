@@ -47,15 +47,13 @@
         height: 20px;
         border: 2px solid #222;
         border-radius: 50%;
-        opacity: .7;
-        transition: opacity .2s, border-color .2s;
-    }
-    .color-list > li.current a {
-        border-color: #568AF2;
-        opacity: 1;
+        transition: border-color .2s;
     }
     .color-list > li a:hover, .color-list > li a:focus {
-        opacity: 1;
+        border-color: #568AF2;
+    }
+    .color-list > li.current a {
+        border-color: #eee;
     }
     .color-list > li.none a {
         background: url('../img/huecross.svg') center / 10px 10px no-repeat;
