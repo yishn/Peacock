@@ -59,12 +59,6 @@ export default class PaletteList extends Component {
         })
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.palettes !== this.props.palettes) {
-            this.listElement.scrollTop = 0
-        }
-    }
-
     measureItemHeight() {
         let measureElement = this.listElement.querySelector('.item')
         let {height} = measureElement.getBoundingClientRect()

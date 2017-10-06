@@ -25,6 +25,12 @@ export default class FilterPaletteList extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.filter !== this.props.filter) {
+            this.listElement.scrollTop = 0
+        }
+    }
+
     render() {
         let {palettes, filter} = this.props
 
@@ -50,6 +56,7 @@ export default class FilterPaletteList extends Component {
         }
 
         return h(PaletteList, Object.assign({}, this.props, {
+            ref: el => this.listElement = el.listElement,
             filter: undefined,
             palettes: this.filteredPalettes,
             onItemClick: this.handleItemClick

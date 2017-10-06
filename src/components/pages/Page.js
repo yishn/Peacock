@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import {h} from 'preact'
 import Component from '../PureComponent'
 
@@ -8,7 +9,12 @@ export default class Page extends Component {
     }
 
     render() {
-        return h('section', {id: this.props.id, class: 'page'},
+        return h('section',
+            {
+                id: this.props.id,
+                class: classNames('page', {show: this.props.show})
+            },
+
             this.props.children
         )
     }

@@ -42,7 +42,7 @@ export default class App extends Component {
     render() {
         let palette = this.state.palettes[this.state.detailIndex]
 
-        return h('div', {id: 'root', class: `page-${this.state.page}`},
+        return h('div', {id: 'root'},
             h(BrowsePage, {
                 show: this.state.page === 'browse',
                 palettes: this.state.palettes,
