@@ -25,10 +25,10 @@ export class PaletteColor extends Component {
     }
 
     render() {
-        return h('li', {
+        return h(this.props.tagName, Object.assign({
             title: [this.state.name || '', this.props.color.toUpperCase()].join('\n').trim(),
             style: {background: this.props.color}
-        })
+        }, this.props.innerProps || {}))
     }
 }
 
@@ -36,7 +36,11 @@ export default class Palette extends Component {
     render() {
         return h('ul', {class: 'palette'},
             this.props.colors.map(color =>
-                h(PaletteColor, {key: color, color})
+                h(PaletteColor, {
+                    key: color,
+                    tagName: 'li',
+                    color
+                })
             )
         )
     }
