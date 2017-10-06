@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import colorNamer from 'color-namer'
+import chroma from 'chroma-js'
 import {h} from 'preact'
 import Component from './PureComponent'
 
@@ -50,21 +50,23 @@ export default class FilterPanel extends Component {
                         })
                     ),
 
-                    colorNamer.lists.roygbiv.map(x => h('li',
+                    ['Red', 'Yellow', 'Green', 'Teal', 'Blue', 'Indigo', 'Violet']
+                    .map((x, i) => [chroma.hsv(i * 360 / 7, 1, 1).hex(), x])
+                    .map(([color, title]) => h('li',
                         {
                             class: classNames({
                                 current: this.props.hue != null
-                                    && this.props.hue.toLowerCase() === x.hex.toLowerCase()
+                                    && this.props.hue.toLowerCase() === color.toLowerCase()
                             })
                         },
 
                         h('a', {
-                            style: {backgroundColor: x.hex},
-                            title: x.name[0].toUpperCase() + x.name.slice(1).toLowerCase(),
-                            'data-hue': x.hex,
+                            title,
+                            style: {backgroundColor: color},
+                            'data-hue': color,
                             onClick: this.handleHueClick
-                        }))
-                    )
+                        })
+                    ))
                 ))
             )
         )

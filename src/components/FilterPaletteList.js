@@ -41,7 +41,7 @@ export default class FilterPaletteList extends Component {
                 palettes[i].name.toLowerCase().includes(filter.text.trim())
                 && (filter.hue == null || palettes[i].colors
                     .map(color => getHueDistance(color.hex, filter.hue))
-                    .reduce((min, x) => Math.min(min, x)) < 60)
+                    .reduce((min, x) => Math.min(min, x)) < 52)
             )
         )
 
