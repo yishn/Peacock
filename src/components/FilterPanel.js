@@ -4,8 +4,8 @@ import {h} from 'preact'
 import Component from './PureComponent'
 
 export default class FilterPanel extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.handleTextInputChange = evt => {
             let {value} = evt.currentTarget

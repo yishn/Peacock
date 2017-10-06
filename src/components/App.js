@@ -21,10 +21,22 @@ export default class App extends Component {
         }
 
         this.handleItemClick = this.handleItemClick.bind(this)
+        this.handlePaletteChange = this.handlePaletteChange.bind(this)
+        this.handleDetailsBackClick = this.handleDetailsBackClick.bind(this)
     }
 
     handleItemClick(evt) {
         this.setState({page: 'details', detailIndex: evt.index})
+    }
+
+    handleDetailsBackClick() {
+        this.setState({page: 'browse'})
+    }
+
+    handlePaletteChange(evt) {
+        this.setState(({detailIndex, palettes}) => ({
+            palettes: mutate(palettes, {[detailIndex]: evt})
+        }))
     }
 
     render() {
@@ -32,12 +44,16 @@ export default class App extends Component {
 
         return h('div', {id: 'root', class: `page-${this.state.page}`},
             h(BrowsePage, {
+                show: this.state.page === 'browse',
                 palettes: this.state.palettes,
                 onItemClick: this.handleItemClick
             }),
 
             h(DetailsPage, {
-                palette
+                show: this.state.page === 'details',
+                palette,
+                onBackClick: this.handleDetailsBackClick,
+                onChange: this.handlePaletteChange
             })
         )
     }

@@ -3,13 +3,14 @@ import Component from '../PureComponent'
 
 import mutate from '../../renderer/mutate'
 
+import Page from './Page'
 import FilterPanel from '../FilterPanel'
 import FilterPaletteList from '../FilterPaletteList'
 import Toolbar, {ToolbarButton} from '../Toolbar'
 
 export default class BrowsePage extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             filter: {text: '', hue: null}
@@ -21,7 +22,7 @@ export default class BrowsePage extends Component {
     }
 
     render() {
-        return h('section', {id: 'browse', class: 'page'},
+        return h(Page, {id: 'browse', show: this.props.show},
             h(FilterPanel, {
                 text: this.state.filter.text,
                 hue: this.state.filter.hue,
