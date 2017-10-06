@@ -5,6 +5,7 @@ const path = require('path')
 
 exports.userDataDirectory = app.getPath('userData')
 exports.settingsPath = path.join(exports.userDataDirectory, 'settings.json')
+exports.palettesPath = path.join(exports.userDataDirectory, 'palettes.json')
 
 try { fs.mkdirSync(exports.userDataDirectory) } catch (err) {}
 
@@ -40,7 +41,10 @@ exports.load = function() {
 }
 
 exports.save = function() {
-    fs.writeFileSync(exports.settingsPath, JSON.stringify(settings, null, '  '))
+    try {
+        fs.writeFileSync(exports.settingsPath, JSON.stringify(settings, null, '  '))
+    } catch (err) {}
+
     return exports
 }
 
@@ -58,3 +62,19 @@ exports.set = function(key, value) {
 }
 
 exports.load()
+
+exports.loadPalettes = function() {
+    try {
+        return JSON.parse(fs.readFileSync(exports.palettesPath, 'utf8'))
+    } catch (err) {
+        return []
+    }
+}
+
+exports.savePalettes = function(palettes) {
+    try {
+        fs.writeFileSync(exports.palettesPath, JSON.stringify(palettes))
+    } catch (err) {}
+
+    return exports
+}
