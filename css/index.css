@@ -56,6 +56,7 @@
         height: 20px;
         border: 2px solid #222;
         border-radius: 50%;
+        background: #444 center / 10px 10px no-repeat;
         transition: border-color .2s;
     }
     .color-list > li a:hover, .color-list > li a:focus {
@@ -65,7 +66,10 @@
         border-color: #eee;
     }
     .color-list > li.none a {
-        background: url('../img/huecross.svg') center / 10px 10px no-repeat;
+        background-image: url('../img/color-list-cross.svg')
+    }
+    .color-list > li.add a {
+        background-image: url('../img/color-list-plus.svg')
 }
 
 .palette-list {

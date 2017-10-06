@@ -1,8 +1,12 @@
 const namer = require('color-namer')
 
 self.addEventListener('message', evt => {
-    self.postMessage({
+    let result = namer(evt.data, {pick: ['ntc']}).ntc[0]
+
+    self.postMessage(Object.assign({
         hex: evt.data,
-        name: namer(evt.data, {pick: ['ntc']}).ntc[0].name
-    })
+        name: result.name,
+        distance: result.distance,
+        foundHex: result.hex
+    }))
 })

@@ -43,7 +43,6 @@ export default class FilterPanel extends Component {
                         },
 
                         h('a', {
-                            style: {backgroundColor: '#444'},
                             title: 'None',
                             'data-hue': 'null',
                             onClick: this.handleHueClick

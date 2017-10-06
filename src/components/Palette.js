@@ -25,10 +25,14 @@ export class PaletteColor extends Component {
     }
 
     render() {
-        return h(this.props.tagName, Object.assign({
-            title: [this.state.name || '', this.props.color.toUpperCase()].join('\n').trim(),
-            style: {background: this.props.color}
-        }, this.props.innerProps || {}))
+        return h(this.props.tagName,
+            mutate({
+                title: [this.state.name || '', this.props.color.toUpperCase()].join('\n'),
+                style: {background: this.props.color}
+            }, this.props.innerProps || {}),
+
+            this.props.children
+        )
     }
 }
 
