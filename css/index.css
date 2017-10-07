@@ -68,6 +68,10 @@
     }
     #details .palette {
         height: 100px;
+    }
+    #details > main {
+        overflow-x: hidden;
+        overflow-y: auto;
 }
 
 .filter-panel {
@@ -183,11 +187,37 @@
 }
 
 .palette {
-    display: grid;
-    grid-auto-columns: 1fr;
-    grid-auto-flow: column;
-    height: 50px;
-    list-style: none;
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-auto-flow: column;
+        height: 50px;
+        list-style: none;
+    }
+    .palette > li {
+        position: relative;
+    }
+    .palette .grabber {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        opacity: 0;
+        cursor: -webkit-grab;
+        transition: opacity .2s;
+    }
+    .palette .grabber:active {
+        cursor: -webkit-grabbing;
+    }
+    .palette > li:hover .grabber,
+    .palette .grabber:focus {
+        opacity: .7;
+    }
+    .palette .grabber img {
+        display: block;
+        width: 12px;
+        height: 12px;
+    }
+    .palette .grabber.invert img {
+        filter: invert(100%);
 }
 
 .toolbar {

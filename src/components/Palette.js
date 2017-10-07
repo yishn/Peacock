@@ -1,3 +1,5 @@
+import chroma from 'chroma-js'
+import classNames from 'classnames'
 import {h} from 'preact'
 import Component from './PureComponent'
 
@@ -36,16 +38,113 @@ export class PaletteColor extends Component {
     }
 }
 
-export default class Palette extends Component {
+export class MiniPalette extends Component {
     render() {
-        return h('ul', {class: 'palette'},
-            this.props.colors.map(color =>
-                h(PaletteColor, {
-                    key: color,
+        return h('ul', {class: 'palette'}, this.props.colors.map(color =>
+            h(PaletteColor, {
+                key: color,
+                color,
+                tagName: 'li'
+            })
+        ))
+    }
+}
+
+export default class Palette extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            permutation: null
+        }
+
+        this.handleGrabberMouseDown = evt => {
+            evt.preventDefault()
+
+            if (evt.button !== 0) return
+
+            let {clientX, clientY} = evt
+            let {dataset} = evt.currentTarget.parentNode
+            let index = +dataset.index
+
+            this.mouseDownInfo = {
+                index,
+                x: clientX,
+                y: clientY,
+                steps: [...this.element.querySelectorAll('li')].map(li => (({left, top}) =>
+                    ({x: left, y: top})
+                )(li.getBoundingClientRect()))
+            }
+        }
+
+        this.handleMouseMove = evt => {
+            if (this.mouseDownInfo == null) return
+
+            evt.preventDefault()
+
+            let {index, steps} = this.mouseDownInfo
+            let newIndex = steps.findIndex((_, i) => i === steps.length - 1 || steps[i + 1].x > evt.clientX)
+            let newPermutation = this.props.colors.map((_, i) => i)
+
+            newPermutation.splice(index, 1)
+            newPermutation.splice(newIndex, 0, index)
+
+            this.setState({permutation: newPermutation})
+        }
+
+        this.handleMouseUp = evt => {
+            if (this.mouseDownInfo == null) return
+
+            if (this.state.permutation != null) {
+                let {onOrderChange = () => {}} = this.props
+                onOrderChange({permutation: this.state.permutation})
+
+                this.setState({permutation: null})
+            }
+
+            this.mouseDownInfo = null
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousemove', this.handleMouseMove)
+        document.addEventListener('mouseup', this.handleMouseUp)
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousemove', this.handleMouseMove)
+        document.removeEventListener('mouseup', this.handleMouseUp)
+    }
+
+    render() {
+        return h('ul',
+            {
+                ref: el => this.element = el,
+                class: 'palette'
+            },
+
+            (this.state.permutation || this.props.colors.map((_, i) => i))
+            .map(i => (color => h(PaletteColor,
+                {
+                    key: i,
+                    color,
                     tagName: 'li',
-                    color
-                })
-            )
+                    innerProps: {'data-index': i}
+                },
+
+                h('a',
+                    {
+                        href: '#',
+                        class: classNames('grabber', {
+                            invert: chroma.distance(color, 'black') < chroma.distance(color, 'white')
+                        }),
+
+                        onMouseDown: this.handleGrabberMouseDown
+                    },
+
+                    h('img', {src: './img/grabber.svg'})
+                )
+            ))(this.props.colors[i]))
         )
     }
 }

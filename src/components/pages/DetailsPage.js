@@ -22,6 +22,13 @@ export default class DetailsPage extends Component {
 
             onChange({name: value})
         }
+
+        this.handlePaletteOrderChange = evt => {
+            if (evt.permutation == null) return
+
+            let {palette, onChange = () => {}} = this.props
+            onChange({colors: evt.permutation.map(i => palette.colors[i])})
+        }
     }
 
     render() {
@@ -29,6 +36,7 @@ export default class DetailsPage extends Component {
             h('section', {class: 'title'},
                 h('a',
                     {
+                        href: '#',
                         class: 'back',
                         title: 'Go Back',
                         onClick: this.handleBackClick
@@ -50,7 +58,8 @@ export default class DetailsPage extends Component {
 
             h('main', {},
                 h(Palette, {
-                    colors: this.props.palette.colors.map(x => x.hex)
+                    colors: this.props.palette.colors.map(x => x.hex),
+                    onOrderChange: this.handlePaletteOrderChange
                 })
             ),
 

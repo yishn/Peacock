@@ -43,6 +43,7 @@ export default class FilterPanel extends Component {
                         },
 
                         h('a', {
+                            href: '#',
                             title: 'None',
                             'data-hue': 'null',
                             onClick: this.handleHueClick
@@ -60,6 +61,7 @@ export default class FilterPanel extends Component {
                         },
 
                         h('a', {
+                            href: '#',
                             title,
                             style: {backgroundColor: color},
                             'data-hue': color,

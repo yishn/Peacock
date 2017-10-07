@@ -25,7 +25,7 @@ export class ToolbarButton extends Component {
 
     render() {
         return h('li', {class: 'button'},
-            h('a', {onClick: this.handleClick, title: this.props.text},
+            h('a', {href: '#', title: this.props.text, onClick: this.handleClick},
                 h('img', {src: this.props.icon, alt: this.props.text})
             )
         )

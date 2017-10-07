@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import {h} from 'preact'
 import Component from './PureComponent'
-import Palette from './Palette'
+import {MiniPalette} from './Palette'
 
 export class PaletteListItem extends Component {
     constructor(props) {
@@ -24,12 +24,12 @@ export class PaletteListItem extends Component {
                 'data-index': this.props.index
             },
 
-            h(Palette, {
+            h(MiniPalette, {
                 colors: this.props.colors
             }),
 
             h('h3', {class: 'name'},
-                h('a', {onClick: this.handleClick}, this.props.name)
+                h('a', {href: '#', onClick: this.handleClick}, this.props.name)
             )
         )
     }
@@ -48,28 +48,30 @@ export default class PaletteList extends Component {
         this.handleScroll = () => {
             this.setState({scrollTop: this.element.querySelector('ul').scrollTop})
         }
+
+        this.measureItemHeight = () => {
+            let measureElement = this.listElement.querySelector('.item')
+            let {height} = measureElement.getBoundingClientRect()
+
+            this.setState({itemHeight: Math.round(height)})
+        }
+
+        this.measureListHeight = () => {
+            let {height} = this.listElement.getBoundingClientRect()
+
+            this.setState({listHeight: Math.round(height)})
+        }
     }
 
     componentDidMount() {
         this.measureItemHeight()
         this.measureListHeight()
 
-        window.addEventListener('resize', () => {
-            this.measureListHeight()
-        })
+        window.addEventListener('resize', this.measureListHeight)
     }
 
-    measureItemHeight() {
-        let measureElement = this.listElement.querySelector('.item')
-        let {height} = measureElement.getBoundingClientRect()
-
-        this.setState({itemHeight: Math.round(height)})
-    }
-
-    measureListHeight() {
-        let {height} = this.listElement.getBoundingClientRect()
-
-        this.setState({listHeight: Math.round(height)})
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.measureListHeight)
     }
 
     render() {
