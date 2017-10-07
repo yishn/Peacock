@@ -28,10 +28,10 @@ export default class Page extends Component {
         return h('section',
             {
                 id: this.props.id,
-                class: classNames('page', {show: this.props.show})
+                class: classNames('page', {show: this.state.show})
             },
 
-            this.state.show && this.props.children
+            h('div', {}, this.props.children)
         )
     }
 }
