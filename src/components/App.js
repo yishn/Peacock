@@ -20,23 +20,19 @@ export default class App extends Component {
             palettes: setting.loadPalettes()
         }
 
-        this.handleItemClick = this.handleItemClick.bind(this)
-        this.handlePaletteChange = this.handlePaletteChange.bind(this)
-        this.handleDetailsBackClick = this.handleDetailsBackClick.bind(this)
-    }
+        this.handleItemClick = evt => {
+            this.setState({page: 'details', detailIndex: evt.index})
+        }
 
-    handleItemClick(evt) {
-        this.setState({page: 'details', detailIndex: evt.index})
-    }
+        this.handlePaletteChange = evt => {
+            this.setState(({detailIndex, palettes}) => ({
+                palettes: mutate(palettes, {[detailIndex]: evt})
+            }))
+        }
 
-    handleDetailsBackClick() {
-        this.setState({page: 'browse'})
-    }
-
-    handlePaletteChange(evt) {
-        this.setState(({detailIndex, palettes}) => ({
-            palettes: mutate(palettes, {[detailIndex]: evt})
-        }))
+        this.handleDetailsBackClick = () => {
+            this.setState({page: 'browse'})
+        }
     }
 
     render() {
