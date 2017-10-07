@@ -67,7 +67,7 @@ export default class Palette extends Component {
             let {dataset} = evt.currentTarget.parentNode
             let index = +dataset.index
 
-            this.mouseDownInfo = {
+            this.grabberMouseDownInfo = {
                 index,
                 x: clientX,
                 y: clientY,
@@ -78,11 +78,11 @@ export default class Palette extends Component {
         }
 
         this.handleMouseMove = evt => {
-            if (this.mouseDownInfo == null) return
+            if (this.grabberMouseDownInfo == null) return
 
             evt.preventDefault()
 
-            let {index, steps} = this.mouseDownInfo
+            let {index, steps} = this.grabberMouseDownInfo
             let newIndex = steps.findIndex((_, i) => i === steps.length - 1 || steps[i + 1].x > evt.clientX)
             let newPermutation = this.props.colors.map((_, i) => i)
 
@@ -93,16 +93,49 @@ export default class Palette extends Component {
         }
 
         this.handleMouseUp = evt => {
-            if (this.mouseDownInfo == null) return
+            if (this.grabberMouseDownInfo != null) {
+                if (this.state.permutation != null) {
+                    let {onOrderChange = () => {}} = this.props
+                    onOrderChange({permutation: this.state.permutation})
 
-            if (this.state.permutation != null) {
-                let {onOrderChange = () => {}} = this.props
-                onOrderChange({permutation: this.state.permutation})
+                    this.setState({permutation: null})
+                }
 
-                this.setState({permutation: null})
+                this.grabberMouseDownInfo = null
             }
 
-            this.mouseDownInfo = null
+            if (this.colorMouseDownInfo != null) {
+                let {index, button, time} = this.colorMouseDownInfo
+
+                if (Date.now() - time < 500) {
+                    if (button === 0) {
+                        let {onColorClick = () => {}} = this.props
+                        onColorClick({index})
+                    } else if (button === 2) {
+                        let {onColorAltClick = () => {}} = this.props
+                        onColorAltClick({index})
+                    }
+
+                    clearTimeout(this.colorAltClickTimeout)
+                }
+
+                this.colorMouseDownInfo = null
+            }
+        }
+
+        this.handleColorMouseDown = evt => {
+            let index = +evt.currentTarget.parentNode.dataset.index
+
+            this.colorMouseDownInfo = {
+                index,
+                button: evt.button,
+                time: Date.now()
+            }
+
+            this.colorAltClickTimeout = setTimeout(() => {
+                let {onColorAltClick = () => {}} = this.props
+                onColorAltClick({index})
+            }, 500)
         }
     }
 
@@ -124,13 +157,21 @@ export default class Palette extends Component {
             },
 
             (this.state.permutation || this.props.colors.map((_, i) => i))
-            .map(i => (color => h(PaletteColor,
+            .map(i => (color => h('li',
                 {
                     key: i,
-                    color,
-                    tagName: 'li',
-                    innerProps: {'data-index': i}
+                    'data-index': i
                 },
+
+                h(PaletteColor, {
+                    color,
+                    tagName: 'a',
+                    innerProps: {
+                        href: '#',
+                        class: 'color',
+                        onMouseDown: this.handleColorMouseDown
+                    }
+                }),
 
                 h('a',
                     {

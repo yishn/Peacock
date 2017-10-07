@@ -196,6 +196,13 @@
     .palette > li {
         position: relative;
     }
+    .palette .color {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
     .palette .grabber {
         position: absolute;
         left: 5px;
