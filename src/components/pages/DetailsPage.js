@@ -3,6 +3,7 @@ import Component from '../PureComponent'
 
 import Page from './Page'
 import Palette from '../Palette'
+import Toolbar, {ToolbarButton} from '../Toolbar'
 
 export default class DetailsPage extends Component {
     constructor(props) {
@@ -47,9 +48,18 @@ export default class DetailsPage extends Component {
                 })
             ),
 
-            h(Palette, {
-                colors: this.props.palette.colors.map(x => x.hex)
-            })
+            h('main', {},
+                h(Palette, {
+                    colors: this.props.palette.colors.map(x => x.hex)
+                })
+            ),
+
+            h(Toolbar, {},
+                h(ToolbarButton, {
+                    text: 'Add Color…',
+                    icon: './img/add.svg'
+                })
+            )
         )
     }
 }
