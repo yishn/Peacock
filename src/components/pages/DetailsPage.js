@@ -26,10 +26,18 @@ export default class DetailsPage extends Component {
     render() {
         return h(Page, {id: 'details', show: this.props.show},
             h('section', {class: 'title'},
-                h('a', {
-                    class: 'back',
-                    onClick: this.handleBackClick
-                }, 'Go Back'),
+                h('a',
+                    {
+                        class: 'back',
+                        title: 'Go Back',
+                        onClick: this.handleBackClick
+                    },
+
+                    h('img', {
+                        src: './img/back.svg',
+                        alt: 'Go Back'
+                    })
+                ),
 
                 h('input', {
                     class: 'name',
