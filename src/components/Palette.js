@@ -108,13 +108,8 @@ export default class Palette extends Component {
                 let {index, button, time} = this.colorMouseDownInfo
 
                 if (Date.now() - time < 500) {
-                    if (button === 0) {
-                        let {onColorClick = () => {}} = this.props
-                        onColorClick({index})
-                    } else if (button === 2) {
-                        let {onColorAltClick = () => {}} = this.props
-                        onColorAltClick({index})
-                    }
+                    let {onColorClick = () => {}} = this.props
+                    onColorClick({index, button})
 
                     clearTimeout(this.colorAltClickTimeout)
                 }
@@ -160,6 +155,7 @@ export default class Palette extends Component {
             .map(i => (color => h('li',
                 {
                     key: i,
+                    class: classNames({selected: this.props.selectedIndex === i}),
                     'data-index': i
                 },
 

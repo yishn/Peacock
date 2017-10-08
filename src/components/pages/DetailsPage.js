@@ -3,17 +3,22 @@ import Component from '../PureComponent'
 
 import Page from './Page'
 import Palette from '../Palette'
+import VariantsColorList from '../VariantsColorList'
 import Toolbar, {ToolbarButton} from '../Toolbar'
 
 export default class DetailsPage extends Component {
     constructor(props) {
         super(props)
 
+        this.state = {
+            selectedIndex: null
+        }
+
         this.handleBackClick = evt => {
             evt.preventDefault()
 
             let {onBackClick = () => {}} = this.props
-            onBackClick()
+            onBackClick(evt)
         }
 
         this.handleNameInput = evt => {
@@ -27,7 +32,18 @@ export default class DetailsPage extends Component {
             if (evt.permutation == null) return
 
             let {palette, onChange = () => {}} = this.props
+
+            this.setState(({selectedIndex}) => ({
+                selectedIndex: selectedIndex == null ? null : evt.permutation.indexOf(selectedIndex)
+            }))
+
             onChange({colors: evt.permutation.map(i => palette.colors[i])})
+        }
+
+        this.handleColorAltClick = evt => {
+            this.setState(({selectedIndex}) => ({
+                selectedIndex: selectedIndex === evt.index ? null : evt.index
+            }))
         }
     }
 
@@ -59,7 +75,13 @@ export default class DetailsPage extends Component {
             h('main', {},
                 h(Palette, {
                     colors: this.props.palette.colors.map(x => x.hex),
-                    onOrderChange: this.handlePaletteOrderChange
+                    selectedIndex: this.state.selectedIndex,
+                    onOrderChange: this.handlePaletteOrderChange,
+                    onColorAltClick: this.handleColorAltClick
+                }),
+
+                h(VariantsColorList, {
+                    show: this.state.selectedIndex != null
                 })
             ),
 

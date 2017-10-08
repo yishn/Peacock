@@ -19,7 +19,7 @@ export class ToolbarButton extends Component {
             evt.preventDefault()
 
             let {onClick = () => {}} = this.props
-            onClick()
+            onClick(evt)
         }
     }
 
