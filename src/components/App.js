@@ -33,6 +33,15 @@ export default class App extends Component {
         this.handleDetailsBackClick = () => {
             this.setState({page: 'browse'})
         }
+
+        this.handlePaletteRemove = evt => {
+            tthis.handleDetailsBackClick()
+
+            setTimeout(() => this.setState(({palettes, detailIndex}) => ({
+                palettes: mutate(palettes, {splice: [detailIndex, 1]}),
+                detailIndex: Math.min(detailIndex, palettes.length - 2)
+            })), 500)
+        }
     }
 
     render() {
@@ -48,8 +57,10 @@ export default class App extends Component {
             h(DetailsPage, {
                 show: this.state.page === 'details',
                 palette,
+
                 onBackClick: this.handleDetailsBackClick,
-                onChange: this.handlePaletteChange
+                onChange: this.handlePaletteChange,
+                onRemove: this.handlePaletteRemove
             })
         )
     }

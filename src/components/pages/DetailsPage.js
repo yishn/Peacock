@@ -1,5 +1,6 @@
 import {h} from 'preact'
 import Component from '../PureComponent'
+import * as dialog from '../../renderer/dialog'
 
 import Page from './Page'
 import Palette from '../Palette'
@@ -45,6 +46,18 @@ export default class DetailsPage extends Component {
                 selectedIndex: selectedIndex === evt.index ? null : evt.index
             }))
         }
+
+        this.handleRemoveClick = evt => {
+            let result = dialog.showMessageBox(
+                'Do you really want to remove this palette?',
+                'warning', ['Remove Palette', 'Cancel']
+            )
+
+            if (result === 0) {
+                let {onRemove = () => {}} = this.props
+                onRemove(evt)
+            }
+        }
     }
 
     render() {
@@ -87,7 +100,8 @@ export default class DetailsPage extends Component {
                     h(ToolbarButton, {
                         text: 'Remove Palette',
                         icon: './img/trash.svg',
-                        warning: true
+                        warning: true,
+                        onClick: this.handleRemoveClick
                     })
                 ),
 
