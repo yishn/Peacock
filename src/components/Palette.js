@@ -184,6 +184,7 @@ export default class Palette extends Component {
                         class: classNames('grabber', {
                             invert: chroma.distance(color, 'black') < chroma.distance(color, 'white')
                         }),
+                        title: 'Drag to Reorder or Remove',
 
                         onMouseDown: this.handleGrabberMouseDown
                     },
