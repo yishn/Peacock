@@ -1,6 +1,11 @@
 export default function mutate(obj, change) {
     let newObj = Array.isArray(obj) ? [...obj] : Object.assign({}, obj)
 
+    if (Array.isArray(obj) && typeof change === 'function') {
+        change(newObj)
+        return newObj
+    }
+
     for (let key in change) {
         let value = change[key]
 
