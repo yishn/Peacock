@@ -71,9 +71,10 @@ export default class Palette extends Component {
                 index,
                 x: clientX,
                 y: clientY,
-                steps: [...this.element.querySelectorAll('li')].map(li => (({left, top}) =>
-                    ({x: left, y: top})
-                )(li.getBoundingClientRect()))
+                elementMeasurements: this.element.getBoundingClientRect(),
+                stepMeasurements: [...this.element.querySelectorAll('li')].map(li =>
+                    li.getBoundingClientRect()
+                )
             }
         }
 
@@ -82,12 +83,20 @@ export default class Palette extends Component {
 
             evt.preventDefault()
 
-            let {index, steps} = this.grabberMouseDownInfo
-            let newIndex = steps.findIndex((_, i) => i === steps.length - 1 || steps[i + 1].x > evt.clientX)
+            let {index, stepMeasurements, elementMeasurements} = this.grabberMouseDownInfo
+            let {top, bottom, left, right} = elementMeasurements
+
+            let newIndex = evt.clientX < left || evt.clientX > right
+                || evt.clientY < top || evt.clientY > bottom
+                ? null
+                : stepMeasurements.findIndex((_, i) =>
+                    i === stepMeasurements.length - 1
+                    || stepMeasurements[i + 1].left > evt.clientX
+                )
             let newPermutation = this.props.colors.map((_, i) => i)
 
             newPermutation.splice(index, 1)
-            newPermutation.splice(newIndex, 0, index)
+            if (newIndex != null) newPermutation.splice(newIndex, 0, index)
 
             this.setState({permutation: newPermutation})
         }
