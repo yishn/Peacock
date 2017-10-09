@@ -73,6 +73,24 @@ export default class DetailsPage extends Component {
             ),
 
             h('main', {},
+                h(Toolbar, {},
+                    h(ToolbarButton, {
+                        text: 'Add Color…',
+                        icon: './img/add.svg'
+                    }),
+
+                    h(ToolbarButton, {
+                        text: 'Extract Colors from Image…',
+                        icon: './img/image.svg'
+                    }),
+
+                    h(ToolbarButton, {
+                        text: 'Remove Palette',
+                        icon: './img/trash.svg',
+                        warning: true
+                    })
+                ),
+
                 h(Palette, {
                     colors: this.props.palette.colors.map(x => x.hex),
                     selectedIndex: this.state.selectedIndex,
@@ -84,13 +102,6 @@ export default class DetailsPage extends Component {
                     show: this.state.selectedIndex != null
                 })
             ),
-
-            h(Toolbar, {},
-                h(ToolbarButton, {
-                    text: 'Add Color…',
-                    icon: './img/add.svg'
-                })
-            )
         )
     }
 }
