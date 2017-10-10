@@ -26,12 +26,13 @@ export default class HueSlider extends Component {
             let distance = Math.sqrt(Math.pow(mx - clientX, 2) + Math.pow(my - clientY, 2))
 
             if (distance > halfSize - this.props.strokeWidth - 8 && distance < halfSize) {
-
                 this.mouseDownInfo = {
                     mx, my,
                     x: clientX,
                     y: clientY
                 }
+
+                this.handleMouseMove(evt)
             }
         }
 
@@ -54,6 +55,7 @@ export default class HueSlider extends Component {
 
     componentDidMount() {
         this.measure()
+        
         window.addEventListener('resize', this.measure)
         document.addEventListener('mouseup', this.handleMouseUp)
         document.addEventListener('mousemove', this.handleMouseMove)

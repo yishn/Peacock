@@ -27,7 +27,7 @@ export default class ColorPicker extends Component {
                 hue: this.state.hue,
                 height: 300,
                 strokeWidth: 20,
-                onChange: ({hue}) => this.setState({hue})
+                onChange: this.setState.bind(this)
             })
         )
     }
