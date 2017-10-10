@@ -1,4 +1,4 @@
-#root > .page {
+#root > .page, .color-picker {
         display: grid;
         position: absolute;
         left: 0;
@@ -307,4 +307,27 @@
         width: 12px;
         height: 12px;
         filter: invert(100%);
+}
+
+.color-picker {
+        background: #fafafa;
+        color: #333;
+        transform: translateY(0);
+        transition: transform .5s, opacity .2s;
+    }
+    .color-picker:not(.show) {
+        transform: translateY(calc(100% + 20px));
+    }
+    .color-picker.hide {
+        opacity: 0;
+}
+
+.hue-slider {
+        position: relative;
+        overflow: hidden;
+    }
+    .hue-slider > svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
 }

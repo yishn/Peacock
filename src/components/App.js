@@ -5,6 +5,7 @@ import mutate from '../renderer/mutate'
 
 import BrowsePage from './pages/BrowsePage'
 import DetailsPage from './pages/DetailsPage'
+import ColorPicker from './color-picker'
 
 const setting = remote.require('./setting')
 
@@ -17,7 +18,8 @@ export default class App extends Component {
         this.state = {
             page: 'browse',
             detailIndex: 0,
-            palettes: setting.loadPalettes()
+            palettes: setting.loadPalettes(),
+            showColorPicker: true
         }
 
         this.handleItemClick = evt => {
@@ -61,6 +63,10 @@ export default class App extends Component {
                 onBackClick: this.handleDetailsBackClick,
                 onChange: this.handlePaletteChange,
                 onRemove: this.handlePaletteRemove
+            }),
+
+            h(ColorPicker, {
+                show: this.state.showColorPicker
             })
         )
     }
