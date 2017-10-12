@@ -54,6 +54,7 @@ export default class SaturationLightnessPicker extends Component {
     }
 
     render() {
+        let {hue, saturation, lightness} = this.props
         let width = this.props.size - margin
         let height = Math.round(heightScale * width)
         let [mx, my] = [width / 2, (Math.pow(height, 2) - Math.pow(width / 2, 2)) / (2 * height)]
@@ -71,24 +72,42 @@ export default class SaturationLightnessPicker extends Component {
                 ref: el => this.element = el,
                 class: 'saturation-lightness-picker'
             },
-            
+
             h('svg', {width: width + margin, height: height + margin},
-                h('defs', {}, ['0, 0, 0', '255, 255, 255'].map((color, i) =>
+                h('defs', {},
+                    ['0, 0, 0', '255, 255, 255'].map((color, i) =>
+                        h('linearGradient',
+                            {
+                                id: `gradient${i}`,
+                                x1: 0, y1: 1,
+                                x2: 0, y2: 0
+                            },
+
+                            h('stop', {'stop-color': `rgb(${color})`}),
+                            h('stop', {'stop-color': `rgba(${color}, 0)`, offset: 1})
+                        ),
+                    ),
+
                     h('linearGradient',
                         {
-                            id: `gradient${i}`,
-                            x1: 0, y1: 1,
-                            x2: 0, y2: 0
+                            id: 'colorGradient',
+                            x1: 0, y1: 0,
+                            x2: 0, y2: 1
                         },
 
-                        h('stop', {'stop-color': `rgb(${color})`}),
-                        h('stop', {'stop-color': `rgba(${color}, 0)`, offset: 1})
-                    ),
-                )),
+                        h('stop', {'stop-color': `rgb(${
+                            chroma.hsv(hue, 0, .5).rgb().join(',')
+                        })`}),
+                        
+                        h('stop', {'stop-color': `rgb(${
+                            chroma.hsv(hue, 1, 1).rgb().join(',')
+                        })`, offset: 3 / 8})
+                    )
+                ),
 
                 h('g', {transform: 'translate(6 6)'},
                     h('path', {
-                        fill: chroma.hsv(this.props.hue, 1, 1).hex(),
+                        fill: 'url(#colorGradient)',
                         d: trianglePath,
                         onMouseDown: this.handleMouseDown
                     }),
@@ -112,7 +131,7 @@ export default class SaturationLightnessPicker extends Component {
                         h('circle', {
                             r: margin / 2 - 2,
                             cx: lx, cy: sy,
-                            fill: chroma.hsl(this.props.hue, this.props.saturation, this.props.lightness).hex(),
+                            fill: chroma.hsl(hue, saturation, lightness).hex(),
                             stroke: '#333',
                             'stroke-width': 2
                         })
