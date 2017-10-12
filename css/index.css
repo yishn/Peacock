@@ -321,13 +321,3 @@
     .color-picker.hide {
         opacity: 0;
 }
-
-.hue-slider {
-        position: relative;
-        overflow: hidden;
-    }
-    .hue-slider > svg {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-}

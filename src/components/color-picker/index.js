@@ -41,7 +41,7 @@ export default class ColorPicker extends Component {
 
             h(HueSlider, {
                 hue: this.props.color.h,
-                height: 300,
+                size: 300,
                 strokeWidth: 20,
                 onChange: this.handleHueChange
             }),

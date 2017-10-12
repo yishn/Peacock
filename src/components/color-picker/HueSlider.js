@@ -9,20 +9,11 @@ export default class HueSlider extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            width: null
-        }
-
-        this.measure = () => {
-            let {width} = this.element.getBoundingClientRect()
-            this.setState({width})
-        }
-
         this.handleMouseDown = evt => {
             if (evt.button !== 0) return
 
             let {top, left} = this.element.querySelector('svg').getBoundingClientRect()
-            let halfSize = Math.min(this.state.width, this.props.height) / 2
+            let halfSize = this.props.size / 2
             let {clientX, clientY} = evt
             let [mx, my] = [left + halfSize, top + halfSize]
 
@@ -55,21 +46,17 @@ export default class HueSlider extends Component {
     }
 
     componentDidMount() {
-        this.measure()
-
-        window.addEventListener('resize', this.measure)
         document.addEventListener('mouseup', this.handleMouseUp)
         document.addEventListener('mousemove', this.handleMouseMove)
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.measure)
         document.removeEventListener('mouseup', this.handleMouseUp)
         document.removeEventListener('mousemove', this.handleMouseMove)
     }
 
     render() {
-        let size = Math.min(this.state.width, this.props.height)
+        let size = this.props.size
         let halfSize = size / 2
         let radius = (size - this.props.strokeWidth) / 2 - 10
         let indicatorA = [halfSize + radius - this.props.strokeWidth / 2 - 4, halfSize]
@@ -78,94 +65,88 @@ export default class HueSlider extends Component {
         return h('section',
             {
                 ref: el => this.element = el,
-                class: 'hue-slider',
-                style: {height: this.props.height}
+                class: 'hue-slider'
             },
 
-            this.state.width == null ? null : [
-                h('svg',
-                    {
-                        width: size,
-                        height: size,
-                        style: {
-                            marginTop: -halfSize,
-                            marginLeft: -halfSize
-                        }
-                    },
+            h('svg',
+                {
+                    width: size,
+                    height: size
+                },
 
-                    h('defs', {}, [...Array(hueSteps)].map((_, i) => {
-                        let [dx, dy] = [Math.cos, Math.sin].map(f =>
-                            (f((i + 1) * tau / hueSteps) - f(i * tau / hueSteps)) * radius
-                        )
+                h('defs', {}, [...Array(hueSteps)].map((_, i) => {
+                    let [dx, dy] = [Math.cos, Math.sin].map(f =>
+                        (f((i + 1) * tau / hueSteps) - f(i * tau / hueSteps)) * radius
+                    )
 
-                        let length = Math.sqrt(dx * dx + dy * dy)
-                        ;[dx, dy] = [dx, dy].map(x => x / length)
+                    let length = Math.sqrt(dx * dx + dy * dy)
+                    ;[dx, dy] = [dx, dy].map(x => x / length)
 
-                        return h('linearGradient',
-                            {
-                                id: `gradient${i}`,
-                                x1: 0.5 - dx / 2, y1: 0.5 - dy / 2,
-                                x2: 0.5 + dx / 2, y2: 0.5 + dy / 2
-                            },
-
-                            h('stop', {
-                                'stop-color': chroma.hsv(i * 360 / hueSteps, 1, 1).hex()
-                            }),
-                            h('stop', {
-                                'stop-color': chroma.hsv((i + 1) * 360 / hueSteps, 1, 1).hex(),
-                                offset: 1.1
-                            })
-                        )
-                    })),
-
-                    h('g', {'stroke-width': this.props.strokeWidth, fill: 'none'},
-                        [...Array(hueSteps)].map((_, i) =>
-                            h('path', {
-                                stroke: `url(#gradient${i})`,
-                                d: [
-                                    'M',
-                                    halfSize + Math.cos(i * tau / hueSteps) * radius,
-                                    halfSize + Math.sin(i * tau / hueSteps) * radius,
-                                    'A',
-                                    radius, radius, 0, 0, 1,
-                                    halfSize + Math.cos((i + 1) * tau / hueSteps) * radius,
-                                    halfSize + Math.sin((i + 1) * tau / hueSteps) * radius
-                                ].join(' '),
-                                onMouseDown: this.handleMouseDown
-                            })
-                        )
-                    ),
-
-                    h('g',
+                    return h('linearGradient',
                         {
-                            transform: `rotate(${this.props.hue} ${halfSize} ${halfSize})`,
-                            style: {pointerEvents: 'none'}
+                            id: `gradient${i}`,
+                            x1: 0.5 - dx / 2, y1: 0.5 - dy / 2,
+                            x2: 0.5 + dx / 2, y2: 0.5 + dy / 2
                         },
 
-                        h('line', {
-                            x1: indicatorA[0], y1: indicatorA[1],
-                            x2: indicatorB[0], y2: indicatorB[1],
-                            stroke: '#fafafa', 'stroke-width': 4
+                        h('stop', {
+                            'stop-color': chroma.hsv(i * 360 / hueSteps, 1, 1).hex()
                         }),
 
-                        h('line', {
-                            x1: indicatorA[0], y1: indicatorA[1],
-                            x2: indicatorB[0], y2: indicatorB[1],
-                            stroke: '#333', 'stroke-width': 2
-                        }),
-
-                        h('circle', {
-                            r: 3, fill: '#333',
-                            cx: indicatorA[0], cy: indicatorA[1]
-                        }),
-
-                        h('circle', {
-                            r: 3, fill: '#333',
-                            cx: indicatorB[0], cy: indicatorB[1]
+                        h('stop', {
+                            'stop-color': chroma.hsv((i + 1) * 360 / hueSteps, 1, 1).hex(),
+                            offset: 1.1
                         })
                     )
+                })),
+
+                h('g', {'stroke-width': this.props.strokeWidth, fill: 'none'},
+                    [...Array(hueSteps)].map((_, i) =>
+                        h('path', {
+                            stroke: `url(#gradient${i})`,
+                            d: [
+                                'M',
+                                halfSize + Math.cos(i * tau / hueSteps) * radius,
+                                halfSize + Math.sin(i * tau / hueSteps) * radius,
+                                'A',
+                                radius, radius, 0, 0, 1,
+                                halfSize + Math.cos((i + 1) * tau / hueSteps + 0.01 * tau) * radius,
+                                halfSize + Math.sin((i + 1) * tau / hueSteps + 0.01 * tau) * radius
+                            ].join(' '),
+                            onMouseDown: this.handleMouseDown
+                        })
+                    )
+                ),
+
+                h('g',
+                    {
+                        transform: `rotate(${this.props.hue} ${halfSize} ${halfSize})`,
+                        style: {pointerEvents: 'none'}
+                    },
+
+                    h('line', {
+                        x1: indicatorA[0], y1: indicatorA[1],
+                        x2: indicatorB[0], y2: indicatorB[1],
+                        stroke: '#fafafa', 'stroke-width': 4
+                    }),
+
+                    h('line', {
+                        x1: indicatorA[0], y1: indicatorA[1],
+                        x2: indicatorB[0], y2: indicatorB[1],
+                        stroke: '#333', 'stroke-width': 2
+                    }),
+
+                    h('circle', {
+                        r: 3, fill: '#333',
+                        cx: indicatorA[0], cy: indicatorA[1]
+                    }),
+
+                    h('circle', {
+                        r: 3, fill: '#333',
+                        cx: indicatorB[0], cy: indicatorB[1]
+                    })
                 )
-            ]
+            )
         )
     }
 }
