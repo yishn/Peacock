@@ -19,6 +19,15 @@ export default class ColorPicker extends Component {
             let {onChange = () => {}} = this.props
             onChange({color: mutate(this.props.color, {h: evt.hue})})
         }
+
+        this.handleSaturationLightnessChange = evt => {
+            let {onChange = () => {}} = this.props
+
+            onChange({color: mutate(this.props.color, {
+                s: evt.saturation,
+                l: evt.lightness
+            })})
+        }
     }
 
     render() {
@@ -42,6 +51,7 @@ export default class ColorPicker extends Component {
                 saturation: this.props.color.s,
                 lightness: this.props.color.l,
                 size: 200,
+                onChange: this.handleSaturationLightnessChange
             })
         )
     }

@@ -19,21 +19,20 @@ export default class HueSlider extends Component {
         }
 
         this.handleMouseDown = evt => {
+            if (evt.button !== 0) return
+
             let {top, left} = this.element.querySelector('svg').getBoundingClientRect()
             let halfSize = Math.min(this.state.width, this.props.height) / 2
             let {clientX, clientY} = evt
             let [mx, my] = [left + halfSize, top + halfSize]
-            let distance = Math.sqrt(Math.pow(mx - clientX, 2) + Math.pow(my - clientY, 2))
 
-            if (distance > halfSize - this.props.strokeWidth - 8 && distance < halfSize) {
-                this.mouseDownInfo = {
-                    mx, my,
-                    x: clientX,
-                    y: clientY
-                }
-
-                this.handleMouseMove(evt)
+            this.mouseDownInfo = {
+                mx, my,
+                x: clientX,
+                y: clientY
             }
+
+            this.handleMouseMove(evt)
         }
 
         this.handleMouseUp = evt => {
@@ -42,6 +41,8 @@ export default class HueSlider extends Component {
 
         this.handleMouseMove = evt => {
             if (this.mouseDownInfo == null) return
+
+            evt.preventDefault()
 
             let {clientX, clientY} = evt
             let {mx, my} = this.mouseDownInfo
@@ -89,8 +90,7 @@ export default class HueSlider extends Component {
                         style: {
                             marginTop: -halfSize,
                             marginLeft: -halfSize
-                        },
-                        onMouseDown: this.handleMouseDown
+                        }
                     },
 
                     h('defs', {}, [...Array(hueSteps)].map((_, i) => {
@@ -130,12 +130,18 @@ export default class HueSlider extends Component {
                                     radius, radius, 0, 0, 1,
                                     halfSize + Math.cos((i + 1) * tau / hueSteps) * radius,
                                     halfSize + Math.sin((i + 1) * tau / hueSteps) * radius
-                                ].join(' ')
+                                ].join(' '),
+                                onMouseDown: this.handleMouseDown
                             })
                         )
                     ),
 
-                    h('g', {transform: `rotate(${this.props.hue} ${halfSize} ${halfSize})`},
+                    h('g',
+                        {
+                            transform: `rotate(${this.props.hue} ${halfSize} ${halfSize})`,
+                            style: {pointerEvents: 'none'}
+                        },
+
                         h('line', {
                             x1: indicatorA[0], y1: indicatorA[1],
                             x2: indicatorB[0], y2: indicatorB[1],
