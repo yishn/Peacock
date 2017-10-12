@@ -13,14 +13,12 @@ export default class App extends Component {
     constructor() {
         super()
 
-        this.window = remote.getCurrentWindow()
-
         this.state = {
             page: 'browse',
             detailIndex: 0,
             palettes: setting.loadPalettes(),
             showColorPicker: true,
-            pickedColor: {h: 30, s: 0, l: 0}
+            pickedColor: {h: 30, s: .5, l: .7}
         }
 
         this.handleItemClick = evt => {

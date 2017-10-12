@@ -55,7 +55,7 @@ export default class HueSlider extends Component {
 
     componentDidMount() {
         this.measure()
-        
+
         window.addEventListener('resize', this.measure)
         document.addEventListener('mouseup', this.handleMouseUp)
         document.addEventListener('mousemove', this.handleMouseMove)
@@ -74,7 +74,7 @@ export default class HueSlider extends Component {
         let indicatorA = [halfSize + radius - this.props.strokeWidth / 2 - 4, halfSize]
         let indicatorB = [halfSize + radius + this.props.strokeWidth / 2 + 4, halfSize]
 
-        return h('div',
+        return h('section',
             {
                 ref: el => this.element = el,
                 class: 'hue-slider',
@@ -94,7 +94,7 @@ export default class HueSlider extends Component {
                     },
 
                     h('defs', {}, [...Array(hueSteps)].map((_, i) => {
-                        let [dx, dy] = [Math.cos, Math.sin].map((f, j) =>
+                        let [dx, dy] = [Math.cos, Math.sin].map(f =>
                             (f((i + 1) * tau / hueSteps) - f(i * tau / hueSteps)) * radius
                         )
 

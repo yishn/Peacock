@@ -5,6 +5,7 @@ import Component from '../PureComponent'
 import mutate from '../../renderer/mutate'
 
 import HueSlider from './HueSlider'
+import SaturationLightnessPicker from './SaturationLightnessPicker'
 
 export default class ColorPicker extends Component {
     constructor(props) {
@@ -34,6 +35,13 @@ export default class ColorPicker extends Component {
                 height: 300,
                 strokeWidth: 20,
                 onChange: this.handleHueChange
+            }),
+
+            h(SaturationLightnessPicker, {
+                hue: this.props.color.h,
+                saturation: this.props.color.s,
+                lightness: this.props.color.l,
+                size: 200,
             })
         )
     }
