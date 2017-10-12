@@ -1,6 +1,8 @@
+import chroma from 'chroma-js'
 import classNames from 'classnames'
 import {h} from 'preact'
 import Component from '../PureComponent'
+import mutate from '../../renderer/mutate'
 
 import HueSlider from './HueSlider'
 
@@ -9,8 +11,12 @@ export default class ColorPicker extends Component {
         super(props)
 
         this.state = {
-            hue: 0,
             hide: false
+        }
+
+        this.handleHueChange = evt => {
+            let {onChange = () => {}} = this.props
+            onChange({color: mutate(this.props.color, {h: evt.hue})})
         }
     }
 
@@ -24,10 +30,10 @@ export default class ColorPicker extends Component {
             },
 
             h(HueSlider, {
-                hue: this.state.hue,
+                hue: this.props.color.h,
                 height: 300,
                 strokeWidth: 20,
-                onChange: this.setState.bind(this)
+                onChange: this.handleHueChange
             })
         )
     }

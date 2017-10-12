@@ -19,7 +19,8 @@ export default class App extends Component {
             page: 'browse',
             detailIndex: 0,
             palettes: setting.loadPalettes(),
-            showColorPicker: true
+            showColorPicker: true,
+            pickedColor: {h: 30, s: 0, l: 0}
         }
 
         this.handleItemClick = evt => {
@@ -66,7 +67,9 @@ export default class App extends Component {
             }),
 
             h(ColorPicker, {
-                show: this.state.showColorPicker
+                show: this.state.showColorPicker,
+                color: this.state.pickedColor,
+                onChange: ({color}) => this.setState({pickedColor: color})
             })
         )
     }
