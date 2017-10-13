@@ -310,6 +310,7 @@
 }
 
 .color-picker {
+        display: block;
         background: #fafafa;
         color: #333;
         transform: translateY(0);
@@ -320,4 +321,21 @@
     }
     .color-picker.hide {
         opacity: 0;
+}
+
+.hue-slider > svg, .saturation-lightness-picker > svg {
+    display: block;
+}
+
+.color-wheel {
+        position: relative;
+    }
+    .color-wheel .hue-slider > svg {
+        margin: 0 auto;
+    }
+    .color-wheel .saturation-lightness-picker {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
 }

@@ -32,9 +32,12 @@ export default class SaturationLightnessPicker extends Component {
 
             let {onChange = () => {}} = this.props
             let {measurements} = this.mouseDownInfo
+
             let relX = clamp(0, 1, (evt.clientX - measurements.left) / measurements.width)
             let relY = clamp(0, 1, (evt.clientY - measurements.top) / measurements.height)
+
             let lightness = clamp(relY / 2, (2 - relY) / 2, relX)
+            
             let triangleHeight = Math.round(heightScale * (this.props.size - margin))
             let height = triangleHeight * Math.min(lightness, 1 - lightness) * 2
             let saturation = clamp(0, 1, height === 0 ? 0 : relY * triangleHeight / height)
@@ -55,11 +58,13 @@ export default class SaturationLightnessPicker extends Component {
 
     render() {
         let {hue, saturation, lightness} = this.props
+
         let width = this.props.size - margin
         let height = Math.round(heightScale * width)
         let [mx, my] = [width / 2, (Math.pow(height, 2) - Math.pow(width / 2, 2)) / (2 * height)]
-        let lx = this.props.lightness * width
-        let sy = height * this.props.saturation * Math.min(this.props.lightness, 1 - this.props.lightness) * 2
+        let lx = lightness * width
+        let sy = height * saturation * Math.min(lightness, 1 - lightness) * 2
+
         let trianglePath = [
             'M', 0, 0,
             'L', width, 0,
@@ -70,7 +75,8 @@ export default class SaturationLightnessPicker extends Component {
         return h('section',
             {
                 ref: el => this.element = el,
-                class: 'saturation-lightness-picker'
+                class: 'saturation-lightness-picker',
+                style: {marginTop: this.props.marginTop}
             },
 
             h('svg', {width: width + margin, height: height + margin},
@@ -108,6 +114,8 @@ export default class SaturationLightnessPicker extends Component {
                 h('g', {transform: 'translate(6 6)'},
                     h('path', {
                         fill: 'url(#colorGradient)',
+                        stroke: '#666',
+                        'stroke-width': 2,
                         d: trianglePath,
                         onMouseDown: this.handleMouseDown
                     }),

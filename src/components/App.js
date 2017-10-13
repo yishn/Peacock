@@ -52,6 +52,7 @@ export default class App extends Component {
             h(BrowsePage, {
                 show: this.state.page === 'browse',
                 palettes: this.state.palettes,
+                
                 onItemClick: this.handleItemClick
             }),
 
@@ -67,6 +68,7 @@ export default class App extends Component {
             h(ColorPicker, {
                 show: this.state.showColorPicker,
                 color: this.state.pickedColor,
+                
                 onChange: ({color}) => this.setState({pickedColor: color})
             })
         )

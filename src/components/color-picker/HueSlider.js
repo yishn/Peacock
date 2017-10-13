@@ -56,11 +56,11 @@ export default class HueSlider extends Component {
     }
 
     render() {
-        let size = this.props.size
+        let {size, strokeWidth} = this.props
         let halfSize = size / 2
-        let radius = (size - this.props.strokeWidth) / 2 - 10
-        let indicatorA = [halfSize + radius - this.props.strokeWidth / 2 - 4, halfSize]
-        let indicatorB = [halfSize + radius + this.props.strokeWidth / 2 + 4, halfSize]
+        let radius = (size - strokeWidth) / 2 - 10
+        let indicatorA = [halfSize + radius - strokeWidth / 2 - 4, halfSize]
+        let indicatorB = [halfSize + radius + strokeWidth / 2 + 4, halfSize]
 
         return h('section',
             {
@@ -100,7 +100,15 @@ export default class HueSlider extends Component {
                     )
                 })),
 
-                h('g', {'stroke-width': this.props.strokeWidth, fill: 'none'},
+                h('g', {'stroke-width': strokeWidth, fill: 'none'},
+                    h('circle', {
+                        stroke: '#666',
+                        'stroke-width': strokeWidth + 4,
+                        r: radius,
+                        cx: halfSize,
+                        cy: halfSize
+                    }),
+
                     [...Array(hueSteps)].map((_, i) =>
                         h('path', {
                             stroke: `url(#gradient${i})`,

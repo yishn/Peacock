@@ -4,8 +4,7 @@ import {h} from 'preact'
 import Component from '../PureComponent'
 import mutate from '../../renderer/mutate'
 
-import HueSlider from './HueSlider'
-import SaturationLightnessPicker from './SaturationLightnessPicker'
+import ColorWheel from './ColorWheel'
 
 export default class ColorPicker extends Component {
     constructor(props) {
@@ -13,20 +12,6 @@ export default class ColorPicker extends Component {
 
         this.state = {
             hide: false
-        }
-
-        this.handleHueChange = evt => {
-            let {onChange = () => {}} = this.props
-            onChange({color: mutate(this.props.color, {h: evt.hue})})
-        }
-
-        this.handleSaturationLightnessChange = evt => {
-            let {onChange = () => {}} = this.props
-
-            onChange({color: mutate(this.props.color, {
-                s: evt.saturation,
-                l: evt.lightness
-            })})
         }
     }
 
@@ -39,19 +24,10 @@ export default class ColorPicker extends Component {
                 })
             },
 
-            h(HueSlider, {
-                hue: this.props.color.h,
+            h(ColorWheel, {
+                color: this.props.color,
                 size: 300,
-                strokeWidth: 20,
-                onChange: this.handleHueChange
-            }),
-
-            h(SaturationLightnessPicker, {
-                hue: this.props.color.h,
-                saturation: this.props.color.s,
-                lightness: this.props.color.l,
-                size: 200,
-                onChange: this.handleSaturationLightnessChange
+                onChange: this.props.onChange
             })
         )
     }
