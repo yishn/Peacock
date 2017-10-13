@@ -37,7 +37,7 @@ export default class ColorWheel extends Component {
                 saturation: this.props.color.s,
                 lightness: this.props.color.l,
                 size: innerRadius * Math.sqrt(3),
-                marginTop: -innerRadius / 2 - 6,
+                marginTop: -innerRadius / 2 - 3,
                 onChange: this.handleSaturationLightnessChange
             }),
 

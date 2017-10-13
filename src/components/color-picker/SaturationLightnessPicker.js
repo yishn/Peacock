@@ -114,8 +114,6 @@ export default class SaturationLightnessPicker extends Component {
                 h('g', {transform: 'translate(6 6)'},
                     h('path', {
                         fill: 'url(#colorGradient)',
-                        stroke: '#666',
-                        'stroke-width': 2,
                         d: trianglePath,
                         onMouseDown: this.handleMouseDown
                     }),
@@ -123,6 +121,8 @@ export default class SaturationLightnessPicker extends Component {
                     [120, -120].map((angle, i) =>
                         h('path', {
                             fill: `url(#gradient${i})`,
+                            stroke: '#999',
+                            'stroke-width': 2,
                             transform: `rotate(${angle} ${mx} ${my})`,
                             d: trianglePath,
                             style: {pointerEvents: 'none'}

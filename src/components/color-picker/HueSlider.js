@@ -102,11 +102,11 @@ export default class HueSlider extends Component {
 
                 h('g', {'stroke-width': strokeWidth, fill: 'none'},
                     h('circle', {
-                        stroke: '#666',
-                        'stroke-width': strokeWidth + 4,
+                        stroke: '#999',
+                        'stroke-width': strokeWidth,
                         r: radius,
                         cx: halfSize,
-                        cy: halfSize
+                        cy: halfSize + 3
                     }),
 
                     [...Array(hueSteps)].map((_, i) =>
