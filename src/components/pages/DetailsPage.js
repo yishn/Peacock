@@ -1,3 +1,4 @@
+import chroma from 'chroma-js'
 import {h} from 'preact'
 import Component from '../PureComponent'
 import * as dialog from '../../renderer/dialog'
@@ -12,7 +13,8 @@ export default class DetailsPage extends Component {
         super(props)
 
         this.state = {
-            selectedIndex: null
+            selectedIndex: 0,
+            currentColor: '#ecd078'
         }
 
         this.handleBackClick = evt => {
@@ -41,10 +43,17 @@ export default class DetailsPage extends Component {
             onChange({colors: evt.permutation.map(i => palette.colors[i])})
         }
 
-        this.handleColorAltClick = evt => {
-            this.setState(({selectedIndex}) => ({
-                selectedIndex: selectedIndex === evt.index ? null : evt.index
-            }))
+        this.handleMainColorClick = evt => {
+            this.setState({
+                selectedIndex: evt.index,
+                currentColor: this.props.palette.colors[evt.index].hex
+            })
+        }
+
+        this.handleVariantColorClick = evt => {
+            this.setState({
+                currentColor: this.props.palette.colors[this.state.selectedIndex].variants[evt.index]
+            })
         }
 
         this.handleRemoveClick = evt => {
@@ -61,6 +70,8 @@ export default class DetailsPage extends Component {
     }
 
     render() {
+        let selectedColor = this.props.palette.colors[this.state.selectedIndex]
+
         return h(Page, {id: 'details', show: this.props.show},
             h('section', {class: 'title'},
                 h('a',
@@ -108,12 +119,19 @@ export default class DetailsPage extends Component {
                 h(Palette, {
                     colors: this.props.palette.colors.map(x => x.hex),
                     selectedIndex: this.state.selectedIndex,
+                    currentIndex: this.props.palette.colors
+                        .findIndex(x => chroma.distance(x.hex, this.state.currentColor) === 0),
+
                     onOrderChange: this.handlePaletteOrderChange,
-                    onColorAltClick: this.handleColorAltClick
+                    onColorClick: this.handleMainColorClick
                 }),
 
                 h(VariantsColorList, {
-                    show: this.state.selectedIndex != null
+                    colors: selectedColor.variants,
+                    currentIndex: selectedColor.variants
+                        .findIndex(x => chroma.distance(x, this.state.currentColor) === 0),
+                        
+                    onColorClick: this.handleVariantColorClick
                 })
             ),
         )

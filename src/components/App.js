@@ -16,9 +16,7 @@ export default class App extends Component {
         this.state = {
             page: 'browse',
             detailIndex: 0,
-            palettes: setting.loadPalettes(),
-            showColorPicker: true,
-            pickedColor: {h: 30, s: .5, l: .7}
+            palettes: setting.loadPalettes()
         }
 
         this.handleItemClick = evt => {
@@ -36,7 +34,7 @@ export default class App extends Component {
         }
 
         this.handlePaletteRemove = evt => {
-            tthis.handleDetailsBackClick()
+            this.handleDetailsBackClick()
 
             setTimeout(() => this.setState(({palettes, detailIndex}) => ({
                 palettes: mutate(palettes, {splice: [detailIndex, 1]}),
@@ -63,13 +61,6 @@ export default class App extends Component {
                 onBackClick: this.handleDetailsBackClick,
                 onChange: this.handlePaletteChange,
                 onRemove: this.handlePaletteRemove
-            }),
-
-            h(ColorPicker, {
-                show: this.state.showColorPicker,
-                color: this.state.pickedColor,
-                
-                onChange: ({color}) => this.setState({pickedColor: color})
             })
         )
     }

@@ -112,34 +112,15 @@ export default class Palette extends Component {
 
                 this.grabberMouseDownInfo = null
             }
-
-            if (this.colorMouseDownInfo != null) {
-                let {index, button, time} = this.colorMouseDownInfo
-
-                if (Date.now() - time < 500) {
-                    let {onColorClick = () => {}} = this.props
-                    onColorClick({index, button})
-
-                    clearTimeout(this.colorAltClickTimeout)
-                }
-
-                this.colorMouseDownInfo = null
-            }
         }
 
-        this.handleColorMouseDown = evt => {
+        this.handleColorClick = evt => {
+            evt.preventDefault()
+
             let index = +evt.currentTarget.parentNode.dataset.index
-
-            this.colorMouseDownInfo = {
-                index,
-                button: evt.button,
-                time: Date.now()
-            }
-
-            this.colorAltClickTimeout = setTimeout(() => {
-                let {onColorAltClick = () => {}} = this.props
-                onColorAltClick({index})
-            }, 500)
+            let {onColorClick = () => {}} = this.props
+            
+            onColorClick({index})
         }
     }
 
@@ -164,8 +145,11 @@ export default class Palette extends Component {
             .map(i => (color => h('li',
                 {
                     key: i,
-                    class: classNames({selected: this.props.selectedIndex === i}),
-                    'data-index': i
+                    'data-index': i,
+                    class: classNames({
+                        selected: this.props.selectedIndex === i,
+                        current: this.props.currentIndex === i
+                    })
                 },
 
                 h(PaletteColor, {
@@ -174,7 +158,8 @@ export default class Palette extends Component {
                     innerProps: {
                         href: '#',
                         class: 'color',
-                        onMouseDown: this.handleColorMouseDown
+                        
+                        onClick: this.handleColorClick
                     }
                 }),
 

@@ -134,17 +134,11 @@
 }
 
 .variants-color-list {
-        height: auto;
-        padding: .5em 1em;
-        overflow: hidden;
-        background: #222;
-        transition: opacity .2s;
-    }
-    .variants-color-list:not(.show) {
-        height: 0;
-        padding: 0;
-        opacity: 0;
-        visibility: hidden;
+    height: auto;
+    padding: .5em 1em;
+    overflow: hidden;
+    background: #222;
+    transition: opacity .2s;
 }
 
 .palette-list {
@@ -240,11 +234,19 @@
         top: 0;
         right: 0;
         bottom: 0;
+        border-top: 3px solid #111;
+        transition: border .2s;
+    }
+    .palette .color:focus {
+        border-color: rgba(0, 0, 0, .2);
+    }
+    .palette > li.current .color {
+        border-top: 3px solid #eee;
     }
     .palette .grabber {
         position: absolute;
         left: 5px;
-        top: 5px;
+        top: 8px;
         opacity: 0;
         cursor: -webkit-grab;
         transition: opacity .2s;

@@ -19,6 +19,8 @@ export default class SaturationLightnessPicker extends Component {
                 y: evt.clientY,
                 measurements: evt.currentTarget.getBoundingClientRect()
             }
+
+            this.handleMouseMove(evt)
         }
 
         this.handleMouseUp = () => {
@@ -81,53 +83,55 @@ export default class SaturationLightnessPicker extends Component {
 
             h('svg', {width: width + margin, height: height + margin},
                 h('defs', {},
-                    ['0, 0, 0', '255, 255, 255'].map((color, i) =>
-                        h('linearGradient',
-                            {
-                                id: `gradient${i}`,
-                                x1: 0, y1: 1,
-                                x2: 0, y2: 0
-                            },
-
-                            h('stop', {'stop-color': `rgb(${color})`}),
-                            h('stop', {'stop-color': `rgba(${color}, 0)`, offset: 1})
-                        ),
-                    ),
-
                     h('linearGradient',
                         {
-                            id: 'colorGradient',
+                            id: 'shadeGradient',
+                            x1: 0, y1: 0,
+                            x2: 1, y2: 0
+                        },
+
+                        h('stop', {'stop-color': 'black'}),
+                        h('stop', {'stop-color': 'white', offset: 1})
+                    ),
+
+                    h('linearGradient', 
+                        {
+                            id: 'transparentGradient',
                             x1: 0, y1: 0,
                             x2: 0, y2: 1
                         },
 
-                        h('stop', {'stop-color': `rgb(${
-                            chroma.hsv(hue, 0, .5).rgb().join(',')
-                        })`}),
-                        
-                        h('stop', {'stop-color': `rgb(${
-                            chroma.hsv(hue, 1, 1).rgb().join(',')
-                        })`, offset: 3 / 8})
+                        h('stop', {'stop-color': 'white'}),
+                        h('stop', {'stop-color': 'rgb(128, 128, 128)', offset: 5 / 8}),
+                        h('stop', {'stop-color': 'black', offset: 1})
+                    ),
+
+                    h('mask', {id: 'shadeMask'},
+                        h('rect', {
+                            fill: 'url(#transparentGradient)',
+                            x: 0, y: 0,
+                            width, height
+                        })
                     )
                 ),
 
                 h('g', {transform: 'translate(6 6)'},
                     h('path', {
-                        fill: 'url(#colorGradient)',
+                        fill: chroma.hsv(hue, 1, 1).hex(),
+                        stroke: '#999',
+                        'stroke-width': 2,
                         d: trianglePath,
                         onMouseDown: this.handleMouseDown
                     }),
 
-                    [120, -120].map((angle, i) =>
-                        h('path', {
-                            fill: `url(#gradient${i})`,
-                            stroke: '#999',
-                            'stroke-width': 2,
-                            transform: `rotate(${angle} ${mx} ${my})`,
-                            d: trianglePath,
-                            style: {pointerEvents: 'none'}
-                        })
-                    ),
+                    h('path', {
+                        mask: 'url(#shadeMask)',
+                        fill: 'url(#shadeGradient)',
+                        stroke: '#999',
+                        'stroke-width': 2,
+                        d: trianglePath,
+                        style: {pointerEvents: 'none'}
+                    }),
 
                     h('g', {style: {pointerEvents: 'none'}},
                         h('circle', {
