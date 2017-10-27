@@ -42,7 +42,6 @@ export class MiniPalette extends Component {
     render() {
         return h('ul', {class: 'palette'}, this.props.colors.map(color =>
             h(PaletteColor, {
-                key: color,
                 color,
                 tagName: 'li'
             })
@@ -144,7 +143,7 @@ export default class Palette extends Component {
             (this.state.permutation || this.props.colors.map((_, i) => i))
             .map(i => (color => h('li',
                 {
-                    key: i,
+                    key: color,
                     'data-index': i,
                     class: classNames({
                         selected: this.props.selectedIndex === i,

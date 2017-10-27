@@ -26,7 +26,7 @@ class CopyItem extends Component {
             clipboard.writeText(value)
 
             this.setState({confirmCopy: true})
-            setTimeout(() => this.setState({confirmCopy: false}), 1000)
+            setTimeout(() => this.setState({confirmCopy: false}), 500)
         }
     }
 
@@ -45,6 +45,7 @@ class CopyItem extends Component {
                         this.state.confirmCopy ? './img/tick.svg' : './img/copy.svg'
                     })`
                 },
+
                 onClick: this.handleCopyClick
             })
         )
@@ -109,6 +110,18 @@ export default class DetailsPage extends Component {
                 let {onRemove = () => {}} = this.props
                 onRemove(evt)
             }
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.palette !== nextProps.palette 
+        && !nextProps.palette.colors.some(color => 
+            chroma.distance(color.hex, this.state.currentColor) === 0
+        )) {
+            this.setState({
+                selectedIndex: 0,
+                currentColor: nextProps.palette.colors[0].hex
+            })
         }
     }
 
