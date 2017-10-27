@@ -35,10 +35,14 @@
 #details > div {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr auto;
 }
 
-#details .title {
+#details main {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    #details .title {
         display: grid;
         grid-template-rows: 1fr;
         grid-template-columns: auto 1fr;
@@ -78,9 +82,41 @@
     #details .palette {
         height: 100px;
     }
-    #details > main {
-        overflow-x: hidden;
-        overflow-y: auto;
+    #details .codes {
+        background: #fafafa;
+        color: #333;
+        padding: 1px 1em;
+    }
+    #details .codes > ul {
+        margin: 1em 0;
+    }
+    #details .codes > ul > li {
+        margin: .5em 0;
+        overflow: hidden;
+    }
+    #details .codes code {
+        color: #666;
+    }
+    #details .codes code em {
+        font-style: normal;
+        color: black;
+    }
+    #details .copy {
+        display: block;
+        position: relative;
+        border-radius: 50%;
+        width: 1.5em;
+        height: 1.5em;
+        float: right;
+        background: transparent center / 12px 12px no-repeat;
+        opacity: .8;
+        transition: background .2s;
+    }
+    #details .copy:hover, #details .copy:focus {
+        background-color: #ccc;
+    }
+    #details .copy:active {
+        background-color: #aaa;
 }
 
 .filter-panel {
@@ -249,7 +285,6 @@
         top: 8px;
         opacity: 0;
         cursor: -webkit-grab;
-        transition: opacity .2s;
     }
     .palette .grabber:active {
         cursor: -webkit-grabbing;

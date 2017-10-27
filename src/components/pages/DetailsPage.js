@@ -1,3 +1,4 @@
+import {clipboard} from 'electron'
 import chroma from 'chroma-js'
 import {h} from 'preact'
 import Component from '../PureComponent'
@@ -7,6 +8,48 @@ import Page from './Page'
 import Palette from '../Palette'
 import VariantsColorList from '../VariantsColorList'
 import Toolbar, {ToolbarButton} from '../Toolbar'
+
+class CopyItem extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            confirmCopy: false
+        }
+
+        this.handleCopyClick = evt => {
+            evt.preventDefault()
+
+            if (this.state.confirmCopy) return
+
+            let value = this.codeElement.innerText
+            clipboard.writeText(value)
+
+            this.setState({confirmCopy: true})
+            setTimeout(() => this.setState({confirmCopy: false}), 1000)
+        }
+    }
+
+    render() {
+        return h('li', {class: this.props.type}, 
+            h('code', {
+                ref: el => this.codeElement = el
+            }, this.props.value),
+            
+            h('a', {
+                class: 'copy', 
+                href: '#', 
+                title: 'Copy',
+                style: {
+                    backgroundImage: `url(${
+                        this.state.confirmCopy ? './img/tick.svg' : './img/copy.svg'
+                    })`
+                },
+                onClick: this.handleCopyClick
+            })
+        )
+    }
+}
 
 export default class DetailsPage extends Component {
     constructor(props) {
@@ -70,42 +113,38 @@ export default class DetailsPage extends Component {
     }
 
     render() {
+        let chromaColor = chroma(this.state.currentColor)
         let selectedColor = this.props.palette.colors[this.state.selectedIndex]
 
         return h(Page, {id: 'details', show: this.props.show},
-            h('section', {class: 'title'},
-                h('a',
-                    {
-                        href: '#',
-                        class: 'back',
-                        title: 'Go Back',
-                        onClick: this.handleBackClick
-                    },
+            h('main', {},
+                h('section', {class: 'title'},
+                    h('a',
+                        {
+                            href: '#',
+                            class: 'back',
+                            title: 'Go Back',
+                            onClick: this.handleBackClick
+                        },
 
-                    h('img', {
-                        src: './img/back.svg',
-                        alt: 'Go Back'
+                        h('img', {
+                            src: './img/back.svg',
+                            alt: 'Go Back'
+                        })
+                    ),
+
+                    h('input', {
+                        class: 'name',
+                        type: 'text',
+                        value: this.props.palette.name,
+                        onInput: this.handleNameInput
                     })
                 ),
 
-                h('input', {
-                    class: 'name',
-                    type: 'text',
-                    value: this.props.palette.name,
-                    onInput: this.handleNameInput
-                })
-            ),
-
-            h('main', {},
                 h(Toolbar, {},
                     h(ToolbarButton, {
                         text: 'Add Color…',
                         icon: './img/add.svg'
-                    }),
-
-                    h(ToolbarButton, {
-                        text: 'Extract Colors from Image…',
-                        icon: './img/image.svg'
                     }),
 
                     h(ToolbarButton, {
@@ -134,6 +173,34 @@ export default class DetailsPage extends Component {
                     onColorClick: this.handleVariantColorClick
                 })
             ),
+
+            h('section', {class: 'codes'}, 
+                h('ul', {},
+                    h(CopyItem, {
+                        type: 'hex',
+                        value: [
+                            '#',
+                            h('em', {}, chromaColor.hex().slice(1).toUpperCase())
+                        ]
+                    }),
+
+                    h(CopyItem, {
+                        type: 'rgb',
+                        value: ['rgb(', chromaColor.rgb().map((x, i) => 
+                            i === 0 ? h('em', {}, x)
+                            : [', ', h('em', {}, x)]
+                        ), ')'] 
+                    }),
+
+                    h(CopyItem, {
+                        type: 'hsl',
+                        value: ['hsl(', chromaColor.hsl().map((x, i) => 
+                            i > 0 ? [', ', h('em', {}, Math.round(x * 100) + '%')]
+                            : h('em', {}, isNaN(x) ? 0 : Math.round(x))
+                        ), ')']
+                    })
+                )
+            )
         )
     }
 }
