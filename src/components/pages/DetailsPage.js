@@ -115,7 +115,7 @@ export default class DetailsPage extends Component {
         }
 
         this.handleAddVariantButtonClick = evt => {
-            colorPicker.show()
+            colorPicker.show(this.state.currentColor, evt => console.log(evt.color))
         }
     }
 
