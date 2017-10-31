@@ -347,8 +347,26 @@
 }
 
 .color-picker {
-    background: #fafafa;
-    color: #333;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+        background: #fafafa;
+        color: #333;
+    }
+    .color-picker .buttons {
+        padding: 1em;
+        background: #ddd;
+        text-align: right;
+    }
+    .color-picker .buttons button {
+        background: #bbb;
+    }
+    .color-picker .buttons button:hover, 
+    .color-picker .buttons button:focus {
+        background: #aaa;
+    }
+    .color-picker .buttons button[type="submit"] {
+        border-color: #999;
 }
 
 .hue-slider > svg, .saturation-lightness-picker > svg {
