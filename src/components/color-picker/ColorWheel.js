@@ -12,6 +12,7 @@ export default class ColorWheel extends Component {
 
         this.handleHueChange = evt => {
             let {onChange = () => {}} = this.props
+            
             onChange({color: mutate(this.props.color, {
                 h: evt.hue
             })})

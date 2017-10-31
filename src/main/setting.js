@@ -12,10 +12,12 @@ try { fs.mkdirSync(exports.userDataDirectory) } catch (err) {}
 let settings = {}
 let defaults = {
     'debug.devtools': false,
+    'color_picker.height': 500,
+    'color_picker.width': 300,
     'window.height': 500,
+    'window.width': 300,
     'window.minheight': 300,
     'window.minwidth': 300,
-    'window.width': 300,
     'window.x': null,
     'window.y': null
 }

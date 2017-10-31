@@ -13,7 +13,7 @@ export default class VariantsColorList extends Component {
             evt.preventDefault()
 
             let {onAddButtonClick = () => {}} = this.props
-            onAddButtonClick()
+            onAddButtonClick(evt)
         }
 
         this.handleColorClick = evt => {

@@ -1,4 +1,4 @@
-#root > .page, .color-picker {
+#root > .page {
         display: grid;
         position: absolute;
         left: 0;
@@ -83,7 +83,7 @@
         height: 100px;
     }
     #details .codes {
-        background: #fafafa;
+        background: #eee;
         color: #333;
         padding: 1px 1em;
     }
@@ -347,17 +347,8 @@
 }
 
 .color-picker {
-        display: block;
-        background: #fafafa;
-        color: #333;
-        transform: translateY(0);
-        transition: transform .5s, opacity .2s;
-    }
-    .color-picker:not(.show) {
-        transform: translateY(calc(100% + 20px));
-    }
-    .color-picker.hide {
-        opacity: 0;
+    background: #fafafa;
+    color: #333;
 }
 
 .hue-slider > svg, .saturation-lightness-picker > svg {
@@ -375,4 +366,5 @@
         top: 50%;
         left: 50%;
         transform: translateX(-50%);
+        pointer-events: none;
 }

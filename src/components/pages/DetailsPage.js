@@ -1,4 +1,4 @@
-import {clipboard} from 'electron'
+import {clipboard, remote} from 'electron'
 import chroma from 'chroma-js'
 import {h} from 'preact'
 import Component from '../PureComponent'
@@ -8,6 +8,8 @@ import Page from './Page'
 import Palette from '../Palette'
 import VariantsColorList from '../VariantsColorList'
 import Toolbar, {ToolbarButton} from '../Toolbar'
+
+const colorPicker = remote.require('./color-picker')
 
 class CopyItem extends Component {
     constructor(props) {
@@ -111,6 +113,10 @@ export default class DetailsPage extends Component {
                 onRemove(evt)
             }
         }
+
+        this.handleAddVariantButtonClick = evt => {
+            colorPicker.show()
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -183,7 +189,8 @@ export default class DetailsPage extends Component {
                     colors: selectedColor.variants,
                     currentColor: this.state.currentColor,
                         
-                    onColorClick: this.handleVariantColorClick
+                    onColorClick: this.handleVariantColorClick,
+                    onAddButtonClick: this.handleAddVariantButtonClick
                 })
             ),
 

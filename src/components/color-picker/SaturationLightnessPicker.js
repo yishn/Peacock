@@ -121,6 +121,8 @@ export default class SaturationLightnessPicker extends Component {
                         stroke: '#999',
                         'stroke-width': 2,
                         d: trianglePath,
+                        style: {pointerEvents: 'all'},
+
                         onMouseDown: this.handleMouseDown
                     }),
 

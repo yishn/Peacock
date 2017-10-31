@@ -1,7 +1,5 @@
 import chroma from 'chroma-js'
-import classNames from 'classnames'
-import {h} from 'preact'
-import Component from '../PureComponent'
+import {h, Component} from 'preact'
 import mutate from '../../renderer/mutate'
 
 import ColorWheel from './ColorWheel'
@@ -11,23 +9,22 @@ export default class ColorPicker extends Component {
         super(props)
 
         this.state = {
-            hide: false
+            color: (([h, s, l]) => 
+                ({h: isNaN(h) ? 0 : h, s, l})
+            )(chroma(props.color).hsl()),
+        }
+
+        this.handleColorChange = evt => {
+            this.setState({color: evt.color})
         }
     }
 
     render() {
-        return h('section',
-            {
-                class: classNames('color-picker', {
-                    show: this.props.show,
-                    hide: this.state.hide
-                })
-            },
-
+        return h('section', {id: 'root', class: 'color-picker'},
             h(ColorWheel, {
-                color: this.props.color,
+                color: this.state.color,
                 size: 300,
-                onChange: this.props.onChange
+                onChange: this.handleColorChange
             })
         )
     }
