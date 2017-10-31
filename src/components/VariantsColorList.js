@@ -1,3 +1,4 @@
+import chroma from 'chroma-js'
 import classNames from 'classnames'
 import {h} from 'preact'
 import Component from './PureComponent'
@@ -19,9 +20,11 @@ export default class VariantsColorList extends Component {
             evt.preventDefault()
 
             let index = +evt.currentTarget.dataset.index
-            let {onColorClick = () => {}} = this.props
+            if (index === this.props.colors.length) index = -1
+            let color = this.props.colors[index] || this.props.mainColor
 
-            onColorClick({index})
+            let {onColorClick = () => {}} = this.props
+            onColorClick({index, color})
         }
     }
 
@@ -32,10 +35,15 @@ export default class VariantsColorList extends Component {
             },
 
             h('ul', {class: 'color-list'},
-                this.props.colors.map((color, i) =>
+                [...this.props.colors, this.props.mainColor]
+                .map((color, i) => [color, i, chroma.distance(color, 'black')])
+                .sort(([, , d1], [, , d2]) => d1 - d2)
+                .map(([color, i]) =>
                     h('li', 
                         {
-                            class: classNames({current: this.props.currentIndex === i})
+                            class: classNames({
+                                current: chroma.distance(color, this.props.currentColor) === 0
+                            })
                         }, 
 
                         h(PaletteColor, {

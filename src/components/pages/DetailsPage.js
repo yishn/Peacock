@@ -96,7 +96,7 @@ export default class DetailsPage extends Component {
 
         this.handleVariantColorClick = evt => {
             this.setState({
-                currentColor: this.props.palette.colors[this.state.selectedIndex].variants[evt.index]
+                currentColor: evt.color
             })
         }
 
@@ -179,9 +179,9 @@ export default class DetailsPage extends Component {
                 }),
 
                 h(VariantsColorList, {
+                    mainColor: selectedColor.hex,
                     colors: selectedColor.variants,
-                    currentIndex: selectedColor.variants
-                        .findIndex(x => chroma.distance(x, this.state.currentColor) === 0),
+                    currentColor: this.state.currentColor,
                         
                     onColorClick: this.handleVariantColorClick
                 })
