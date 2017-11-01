@@ -358,15 +358,53 @@
         background: #ddd;
         text-align: right;
     }
-    .color-picker .buttons button {
+    .color-picker .codes {
+        padding: 1em;
+        list-style: none;
+        text-align: right;
+    }
+    .color-picker .codes > li {
+        margin: 5px 0;
+    }
+    .color-picker .codes h3 {
+        cursor: pointer;
+        transition: color .2s;
+    }
+    .color-picker .codes h3:hover {
+        color: black;
+    }
+    .color-picker .codes input {
+        font-family: Consolas, Menlo, Monaco, 'Ubuntu Mono', monospace;
+    }
+    .color-picker .codes .hex input {
+        width: 177px;
+    }
+    .color-picker .codes h3 {
+        display: inline-block;
+        margin-right: 5px;
+        color: #666;
+        font-size: .8em;
+        font-weight: normal;
+        text-align: right;
+        text-transform: uppercase;
+    }
+    .color-picker input {
+        background: #ddd;
+        text-align: center;
+    }
+    .color-picker input:focus {
+        background: #ccc;
+        border-color: transparent;
+    }
+    .color-picker button {
         background: #bbb;
     }
-    .color-picker .buttons button:hover, 
-    .color-picker .buttons button:focus {
+    .color-picker button:hover, 
+    .color-picker button:focus {
         background: #aaa;
     }
-    .color-picker .buttons button[type="submit"] {
-        border-color: #999;
+    .color-picker button[type="submit"] {
+        border-color: #aaa;
 }
 
 .hue-slider > svg, .saturation-lightness-picker > svg {

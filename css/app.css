@@ -69,6 +69,7 @@ input {
 }
 
 input[type="text"],
+input[type="number"],
 input[type="search"] {
         border: 2px solid transparent;
         background: #333;
@@ -76,9 +77,14 @@ input[type="search"] {
         transition: border .1s;
     }
     input[type="text"]:focus,
+    input[type="number"]:focus,
     input[type="search"]:focus {
         border: 2px solid #568AF2;
         background: #444;
+}
+
+input[type="number"] {
+    padding: .2em;
 }
 
 input[type="search"] {

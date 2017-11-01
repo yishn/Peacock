@@ -38,9 +38,9 @@ export default class HueSlider extends Component {
             let {clientX, clientY} = evt
             let {mx, my} = this.mouseDownInfo
             let [dx, dy] = [clientX - mx, clientY - my]
-            let angle = Math.atan2(dy, dx) * 360 / tau
-            let {onChange = () => {}} = this.props
+            let angle = Math.round(Math.atan2(dy, dx) * 360 / tau)
 
+            let {onChange = () => {}} = this.props
             onChange({hue: angle})
         }
     }
@@ -84,6 +84,7 @@ export default class HueSlider extends Component {
 
                     return h('linearGradient',
                         {
+                            key: i,
                             id: `gradient${i}`,
                             x1: 0.5 - dx / 2, y1: 0.5 - dy / 2,
                             x2: 0.5 + dx / 2, y2: 0.5 + dy / 2

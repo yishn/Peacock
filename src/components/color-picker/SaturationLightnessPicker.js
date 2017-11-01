@@ -16,13 +16,20 @@ export class SaturationLightnessTriangle extends Component {
             h('defs', {}, [...Array(width)].map((_, i) => 
                 h('linearGradient',
                     {
+                        key: i,
                         id: `gradient-${i}`,
                         x1: 0, y1: 0,
                         x2: 0, y2: 1
                     },
 
-                    h('stop', {'stop-color': chroma.hsl(hue, 0, i / width).hex()}),
-                    h('stop', {'stop-color': chroma.hsl(hue, 1, i / width).hex(), offset: 1})
+                    h('stop', {
+                        'stop-color': `hsl(${hue}, 0%, ${Math.round(i * 100 / width)}%)`
+                    }),
+
+                    h('stop', {
+                        'stop-color': `hsl(${hue}, 100%, ${Math.round(i * 100 / width)}%)`,
+                        offset: 1
+                    })
                 )
             )),
 
