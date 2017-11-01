@@ -8,10 +8,10 @@ export default class ColorPicker extends Component {
     constructor(props) {
         super(props)
 
+        let [h, s, l] = chroma(props.color).hsl()
+
         this.state = {
-            color: (([h, s, l]) => 
-                ({h: isNaN(h) ? 0 : h, s, l})
-            )(chroma(props.color).hsl())
+            color: {h: isNaN(h) ? 0 : h, s, l}
         }
 
         this.handleColorChange = evt => {

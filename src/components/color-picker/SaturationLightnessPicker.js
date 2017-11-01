@@ -3,9 +3,44 @@ import {h} from 'preact'
 import Component from '../PureComponent'
 
 const heightScale = Math.sqrt(3) / 2
-const margin = 12
+const padding = 12
 
 let clamp = (min, max, x) => Math.max(min, Math.min(max, x))
+
+export class SaturationLightnessTriangle extends Component {
+    render() {
+        let {hue, width, height} = this.props
+        let triangleHeight = x => x <= 0.5 ? 2 * x * height : 2 * (1 - x) * height
+
+        return h('g', {},
+            h('defs', {}, [...Array(width)].map((_, i) => 
+                h('linearGradient',
+                    {
+                        id: `gradient-${i}`,
+                        x1: 0, y1: 0,
+                        x2: 0, y2: 1
+                    },
+
+                    h('stop', {'stop-color': chroma.hsl(hue, 0, i / width).hex()}),
+                    h('stop', {'stop-color': chroma.hsl(hue, 1, i / width).hex(), offset: 1})
+                )
+            )),
+
+            [...Array(width)].map((_, i) => 
+                h('path', {
+                    fill: `url(#gradient-${i})`,
+                    d: [
+                        'M', i, 0,
+                        'L', i + 1, 0,
+                        'L', i + 1, triangleHeight((i + 1) / width),
+                        'L', i, triangleHeight(i / width),
+                        'Z'
+                    ].join(' ')
+                })
+            )
+        )    
+    }
+}
 
 export default class SaturationLightnessPicker extends Component {
     constructor(props) {
@@ -40,7 +75,7 @@ export default class SaturationLightnessPicker extends Component {
 
             let lightness = clamp(relY / 2, (2 - relY) / 2, relX)
             
-            let triangleHeight = Math.round(heightScale * (this.props.size - margin))
+            let triangleHeight = Math.round(heightScale * (this.props.size - padding))
             let height = triangleHeight * Math.min(lightness, 1 - lightness) * 2
             let saturation = clamp(0, 1, height === 0 ? 0 : relY * triangleHeight / height)
 
@@ -61,18 +96,11 @@ export default class SaturationLightnessPicker extends Component {
     render() {
         let {hue, saturation, lightness} = this.props
 
-        let width = this.props.size - margin
+        let width = Math.round(this.props.size - padding)
         let height = Math.round(heightScale * width)
         let [mx, my] = [width / 2, (Math.pow(height, 2) - Math.pow(width / 2, 2)) / (2 * height)]
         let lx = lightness * width
         let sy = height * saturation * Math.min(lightness, 1 - lightness) * 2
-
-        let trianglePath = [
-            'M', 0, 0,
-            'L', width, 0,
-            'L', width / 2, height,
-            'Z'
-        ].join(' ')
 
         return h('section',
             {
@@ -81,69 +109,34 @@ export default class SaturationLightnessPicker extends Component {
                 style: {marginTop: this.props.marginTop}
             },
 
-            h('svg', {width: width + margin, height: height + margin},
-                h('defs', {},
-                    h('linearGradient',
-                        {
-                            id: 'shadeGradient',
-                            x1: 0, y1: 0,
-                            x2: 1, y2: 0
-                        },
+            h('svg', {width: width + padding, height: height + padding},
+                h('g', {transform: `translate(${padding / 2} ${padding / 2})`},
+                    h(SaturationLightnessTriangle, {hue, width, height}),
 
-                        h('stop', {'stop-color': 'black'}),
-                        h('stop', {'stop-color': 'white', offset: 1})
-                    ),
-
-                    h('linearGradient', 
-                        {
-                            id: 'transparentGradient',
-                            x1: 0, y1: 0,
-                            x2: 0, y2: 1
-                        },
-
-                        h('stop', {'stop-color': 'white'}),
-                        h('stop', {'stop-color': 'rgb(128, 128, 128)', offset: 5 / 8}),
-                        h('stop', {'stop-color': 'black', offset: 1})
-                    ),
-
-                    h('mask', {id: 'shadeMask'},
-                        h('rect', {
-                            fill: 'url(#transparentGradient)',
-                            x: 0, y: 0,
-                            width, height
-                        })
-                    )
-                ),
-
-                h('g', {transform: 'translate(6 6)'},
                     h('path', {
-                        fill: chroma.hsv(hue, 1, 1).hex(),
+                        fill: 'none',
                         stroke: '#999',
                         'stroke-width': 2,
-                        d: trianglePath,
+                        d: [
+                            'M', 0, 0,
+                            'L', width, 0,
+                            'L', width / 2, height,
+                            'Z'
+                        ].join(' '),
                         style: {pointerEvents: 'all'},
 
                         onMouseDown: this.handleMouseDown
                     }),
 
-                    h('path', {
-                        mask: 'url(#shadeMask)',
-                        fill: 'url(#shadeGradient)',
-                        stroke: '#999',
-                        'stroke-width': 2,
-                        d: trianglePath,
-                        style: {pointerEvents: 'none'}
-                    }),
-
                     h('g', {style: {pointerEvents: 'none'}},
                         h('circle', {
-                            r: margin / 2,
+                            r: 6,
                             cx: lx, cy: sy,
                             fill: '#fafafa'
                         }),
 
                         h('circle', {
-                            r: margin / 2 - 2,
+                            r: 4,
                             cx: lx, cy: sy,
                             fill: chroma.hsl(hue, saturation, lightness).hex(),
                             stroke: '#333',

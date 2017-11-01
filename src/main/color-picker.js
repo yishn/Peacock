@@ -15,6 +15,7 @@ exports.show = function(color, callback = () => {}) {
         useContentSize: true,
         center: true,
         resizable: false,
+        minimizable: false,
         maximizable: false,
         show: false,
         parent: BrowserWindow.getFocusedWindow(),
