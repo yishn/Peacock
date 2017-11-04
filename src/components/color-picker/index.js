@@ -241,7 +241,13 @@ export default class ColorPicker extends Component {
                 }),
 
                 h('div', {class: 'eyedropper'},
-                    h('div', {class: 'current-color', style: {background: color.hex()}})
+                    h('div', {
+                        class: 'current-color', 
+                        style: {
+                            background: color.hex(),
+                            borderColor: this.props.color
+                        }
+                    })
                 ),
 
                 h('ul', {class: 'codes'},

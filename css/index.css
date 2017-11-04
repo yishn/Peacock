@@ -364,7 +364,7 @@
         width: 50px;
     }
     .color-picker .current-color {
-        border: 2px solid #999;
+        border: 7px solid #999;
         border-radius: 50%;
         height: 50px;
     }
@@ -380,7 +380,7 @@
         background: #bbb;
     }
     .color-picker .codes > li.flash input:nth-child(3) {
-        transition-delay: .1s;
+        transition-delay: .135s;
     }
     .color-picker .codes > li.flash input:nth-child(4) {
         transition-delay: .2s;
