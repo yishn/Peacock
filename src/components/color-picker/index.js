@@ -1,3 +1,4 @@
+import {clipboard} from 'electron'
 import chroma from 'chroma-js'
 import {h, Component} from 'preact'
 import mutate from '../../renderer/mutate'
@@ -27,6 +28,10 @@ class HexInputItem extends Component {
             if (!valid) return
             onChange({color: chroma2hsl(chroma(value))})
         }
+
+        this.handleCopy = () => {
+            clipboard.writeText(this.props.value)
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -35,7 +40,7 @@ class HexInputItem extends Component {
 
     render() {
         return h('li', {class: 'hex'}, 
-            h('h3', {title: 'Copy'}, 'Hex'), ' ',
+            h('h3', {title: 'Copy', onClick: this.handleCopy}, 'Hex'), ' ',
 
             h('input', {
                 type: 'text', 
@@ -64,6 +69,10 @@ class RgbInputItem extends Component {
             let rgb = [...'rgb'].map(x => x === dataset.prop ? +value : this.props[x])
             onChange({color: chroma2hsl(chroma(...rgb))})
         }
+
+        this.handleCopy = () => {
+            clipboard.writeText(`rgb(${this.props.r}, ${this.props.g}, ${this.props.b})`)
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -73,7 +82,7 @@ class RgbInputItem extends Component {
 
     render() {
         return h('li', {class: 'rgb'}, 
-            h('h3', {title: 'Copy'}, 'RGB'), ' ',
+            h('h3', {title: 'Copy', onClick: this.handleCopy}, 'RGB'), ' ',
 
             [...'rgb'].map(x => 
                 [h('input', {
@@ -117,6 +126,10 @@ class HsvInputItem extends Component {
             let sl = [...'sl'].map(x => x === dataset.prop ? +value / 100 : this.props[x] / 100)
             onChange({color: {h: this.props.h, s: sl[0], l: sl[1]}})
         }
+
+        this.handleCopy = () => {
+            clipboard.writeText(`hsl(${this.props.h}, ${this.props.s / 100}, ${this.props.l / 100})`)
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -126,7 +139,7 @@ class HsvInputItem extends Component {
 
     render() {
         return h('li', {class: 'hsl'}, 
-            h('h3', {title: 'Copy'}, 'HSL'), ' ',
+            h('h3', {title: 'Copy', onClick: this.handleCopy}, 'HSL'), ' ',
             
             h('input', {
                 type: 'number', 
