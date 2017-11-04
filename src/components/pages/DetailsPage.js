@@ -120,10 +120,7 @@ export default class DetailsPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.palette !== nextProps.palette 
-        && !nextProps.palette.colors.some(color => 
-            chroma.distance(color.hex, this.state.currentColor) === 0
-        )) {
+        if (!this.props.show && nextProps.show) {
             this.setState({
                 selectedIndex: 0,
                 currentColor: nextProps.palette.colors[0].hex

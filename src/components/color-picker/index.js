@@ -221,6 +221,10 @@ export default class ColorPicker extends Component {
                     onChange: this.handleColorChange
                 }),
 
+                h('div', {class: 'eyedropper'},
+                    h('div', {class: 'current-color', style: {background: color.hex()}})
+                ),
+
                 h('ul', {class: 'codes'},
                     h(HexInputItem, {
                         value: color.hex().toUpperCase(),

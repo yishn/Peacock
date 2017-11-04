@@ -7,7 +7,7 @@ const padding = 12
 
 let clamp = (min, max, x) => Math.max(min, Math.min(max, x))
 
-export class SaturationLightnessTriangle extends Component {
+class SaturationLightnessTriangle extends Component {
     render() {
         let {hue, width, height} = this.props
         let triangleHeight = x => x <= 0.5 ? 2 * x * height : 2 * (1 - x) * height

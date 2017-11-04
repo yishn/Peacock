@@ -358,13 +358,23 @@
         background: #ddd;
         text-align: right;
     }
+    .color-picker .eyedropper {
+        float: left;
+        margin: 1em;
+        width: 50px;
+    }
+    .color-picker .current-color {
+        border: 2px solid #999;
+        border-radius: 50%;
+        height: 50px;
+    }
     .color-picker .codes {
         padding: 1em;
         list-style: none;
         text-align: right;
     }
     .color-picker .codes > li {
-        margin: 5px 0;
+        margin-bottom: 5px;
     }
     .color-picker .codes h3 {
         cursor: pointer;
