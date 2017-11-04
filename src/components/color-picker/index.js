@@ -128,7 +128,7 @@ class HsvInputItem extends Component {
         }
 
         this.handleCopy = () => {
-            clipboard.writeText(`hsl(${this.props.h}, ${this.props.s / 100}, ${this.props.l / 100})`)
+            clipboard.writeText(`hsl(${this.props.h}, ${this.props.s}%, ${this.props.l}%)`)
         }
     }
 
