@@ -15,6 +15,7 @@ app.on('ready', () => {
         minHeight: setting.get('window.minheight'),
         useContentSize: true,
         center: true,
+        title: app.getName(),
         show: false,
         backgroundColor: '#111',
         webPreferences: {

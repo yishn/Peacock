@@ -17,6 +17,7 @@ exports.show = function(color, callback = () => {}) {
         resizable: false,
         minimizable: false,
         maximizable: false,
+        title: 'Color Picker',
         show: false,
         parent: BrowserWindow.getFocusedWindow(),
         modal: true,
