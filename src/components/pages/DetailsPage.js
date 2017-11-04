@@ -4,6 +4,7 @@ import {h} from 'preact'
 import Component from '../PureComponent'
 import * as dialog from '../../renderer/dialog'
 
+import FlashableComponent from '../helper/FlashableComponent'
 import Page from './Page'
 import Palette from '../Palette'
 import VariantsColorList from '../VariantsColorList'
@@ -12,44 +13,33 @@ import Toolbar, {ToolbarButton} from '../Toolbar'
 const colorPicker = remote.require('./color-picker')
 
 class CopyItem extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            confirmCopy: false
-        }
-
-        this.handleCopyClick = evt => {
-            evt.preventDefault()
-
-            if (this.state.confirmCopy) return
-
-            let value = this.codeElement.innerText
-            clipboard.writeText(value)
-
-            this.setState({confirmCopy: true})
-            setTimeout(() => this.setState({confirmCopy: false}), 500)
-        }
-    }
-
     render() {
-        return h('li', {class: this.props.type}, 
-            h('code', {
-                ref: el => this.codeElement = el
-            }, this.props.value),
-            
-            h('a', {
-                class: 'copy', 
-                href: '#', 
-                title: 'Copy',
-                style: {
-                    backgroundImage: `url(${
-                        this.state.confirmCopy ? './img/tick.svg' : './img/copy.svg'
-                    })`
-                },
+        return h(FlashableComponent, {}, (flash, handleFlash) => 
+            h('li', {class: this.props.type}, 
+                h('code', {
+                    ref: el => this.codeElement = el
+                }, this.props.value),
+                
+                h('a', {
+                    class: 'copy', 
+                    href: '#', 
+                    title: 'Copy',
+                    style: {
+                        backgroundImage: `url(${
+                            flash ? './img/tick.svg' : './img/copy.svg'
+                        })`
+                    },
 
-                onClick: this.handleCopyClick
-            })
+                    onClick: evt => {
+                        evt.preventDefault()
+
+                        if (handleFlash()) return
+
+                        let value = this.codeElement.innerText
+                        clipboard.writeText(value)
+                    }
+                })
+            )
         )
     }
 }
