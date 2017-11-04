@@ -376,6 +376,15 @@
     .color-picker .codes > li {
         margin-bottom: 5px;
     }
+    .color-picker .codes > li.flash input {
+        background: #bbb;
+    }
+    .color-picker .codes > li.flash input:nth-child(3) {
+        transition-delay: .1s;
+    }
+    .color-picker .codes > li.flash input:nth-child(4) {
+        transition-delay: .2s;
+    }
     .color-picker .codes h3 {
         cursor: pointer;
         transition: color .2s;

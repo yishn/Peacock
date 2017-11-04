@@ -1,8 +1,10 @@
 import {clipboard} from 'electron'
 import chroma from 'chroma-js'
+import classNames from 'classnames'
 import {h, Component} from 'preact'
 import mutate from '../../renderer/mutate'
 
+import FlashableComponent from '../helper/FlashableComponent'
 import ColorWheel from './ColorWheel'
 
 function chroma2hsl(color) {
@@ -28,10 +30,6 @@ class HexInputItem extends Component {
             if (!valid) return
             onChange({color: chroma2hsl(chroma(value))})
         }
-
-        this.handleCopy = () => {
-            clipboard.writeText(this.props.value)
-        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -39,14 +37,23 @@ class HexInputItem extends Component {
     }
 
     render() {
-        return h('li', {class: 'hex'}, 
-            h('h3', {title: 'Copy', onClick: this.handleCopy}, 'Hex'), ' ',
+        return h(FlashableComponent, {}, (flash, handleFlash) => 
+            h('li', {class: classNames('hex', {flash})}, 
+                h('h3', {
+                    title: 'Copy', 
+                    onClick: () => {
+                        if (!handleFlash()) return
 
-            h('input', {
-                type: 'text', 
-                value: this.state.value,
-                onInput: this.onValueChange
-            })
+                        clipboard.writeText(this.props.value)
+                    }
+                }, 'Hex'), ' ',
+
+                h('input', {
+                    type: 'text', 
+                    value: this.state.value,
+                    onInput: this.onValueChange
+                })
+            )
         )
     }
 }
@@ -69,10 +76,6 @@ class RgbInputItem extends Component {
             let rgb = [...'rgb'].map(x => x === dataset.prop ? +value : this.props[x])
             onChange({color: chroma2hsl(chroma(...rgb))})
         }
-
-        this.handleCopy = () => {
-            clipboard.writeText(`rgb(${this.props.r}, ${this.props.g}, ${this.props.b})`)
-        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -81,18 +84,29 @@ class RgbInputItem extends Component {
     }
 
     render() {
-        return h('li', {class: 'rgb'}, 
-            h('h3', {title: 'Copy', onClick: this.handleCopy}, 'RGB'), ' ',
+        return h(FlashableComponent, {}, (flash, handleFlash) => 
+            h('li', {class: classNames('rgb', {flash})}, 
+                h('h3', {
+                    title: 'Copy', 
+                    onClick: () => {
+                        if (!handleFlash()) return
 
-            [...'rgb'].map(x => 
-                [h('input', {
-                    'data-prop': x,
-                    type: 'number',
-                    min: 0,
-                    max: 255,
-                    value: this.state[x],
-                    onInput: this.handleValueChange
-                }), ' ']
+                        clipboard.writeText(`rgb(${
+                            [...'rgb'].map(x => this.props[x]).join(', ')
+                        })`)
+                    }
+                }, 'RGB'), ' ',
+
+                [...'rgb'].map(x => 
+                    [h('input', {
+                        'data-prop': x,
+                        type: 'number',
+                        min: 0,
+                        max: 255,
+                        value: this.state[x],
+                        onInput: this.handleValueChange
+                    }), ' ']
+                )
             )
         )
     }
@@ -126,10 +140,6 @@ class HsvInputItem extends Component {
             let sl = [...'sl'].map(x => x === dataset.prop ? +value / 100 : this.props[x] / 100)
             onChange({color: {h: this.props.h, s: sl[0], l: sl[1]}})
         }
-
-        this.handleCopy = () => {
-            clipboard.writeText(`hsl(${this.props.h}, ${this.props.s}%, ${this.props.l}%)`)
-        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -138,26 +148,35 @@ class HsvInputItem extends Component {
     }
 
     render() {
-        return h('li', {class: 'hsl'}, 
-            h('h3', {title: 'Copy', onClick: this.handleCopy}, 'HSL'), ' ',
-            
-            h('input', {
-                type: 'number', 
-                min: 0,
-                max: 359,
-                value: this.state.h,
-                onInput: this.handleHueChange
-            }), ' ',
+        return h(FlashableComponent, {}, (flash, handleFlash) => 
+            h('li', {class: classNames('hsl', {flash})}, 
+                h('h3', {
+                    title: 'Copy', 
+                    onClick: () => {
+                        if (!handleFlash()) return
 
-            [...'sl'].map(x =>
-                [h('input', {
-                    'data-prop': x,
-                    type: 'number',
+                        clipboard.writeText(`hsl(${this.props.h}, ${this.props.s}%, ${this.props.l}%)`)
+                    }
+                }, 'HSL'), ' ',
+                
+                h('input', {
+                    type: 'number', 
                     min: 0,
-                    max: 100,
-                    value: this.state[x],
-                    onInput: this.handleValueChange
-                }), ' ']
+                    max: 359,
+                    value: this.state.h,
+                    onInput: this.handleHueChange
+                }), ' ',
+
+                [...'sl'].map(x =>
+                    [h('input', {
+                        'data-prop': x,
+                        type: 'number',
+                        min: 0,
+                        max: 100,
+                        value: this.state[x],
+                        onInput: this.handleValueChange
+                    }), ' ']
+                )
             )
         )
     }
