@@ -22,8 +22,14 @@ export class PaletteColor extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.color === this.props.color) return
 
+        let color = this.props.color
         this.setState({name: null})
-        namer(this.props.color).then(name => this.setState({name}))
+
+        namer(color, this.props.cache).then(name => {
+            if (this.props.color === color) {
+                this.setState({name})
+            }
+        })
     }
 
     render() {

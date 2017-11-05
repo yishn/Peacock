@@ -6,6 +6,7 @@ import mutate from '../../renderer/mutate'
 
 import FlashableComponent from '../helper/FlashableComponent'
 import ColorWheel from './ColorWheel'
+import {PaletteColor} from '../Palette'
 
 function chroma2hsl(color) {
     let [h, s, l] = color.hsl()
@@ -211,13 +212,14 @@ export default class ColorPicker extends Component {
         }
 
         this.handleKeyDown = evt => {
-            if (evt.keyCode === 13) {
-                // Enter
-                this.handleSubmitClick(evt)
-            } else if (evt.keyCode === 27) {
+            if (evt.keyCode === 27) {
                 // Escape
                 this.handleCancelClick(evt)
             }
+        }
+
+        this.handleEyedropperClick = evt => {
+            evt.preventDefault()
         }
     }
 
@@ -241,13 +243,31 @@ export default class ColorPicker extends Component {
                 }),
 
                 h('div', {class: 'eyedropper'},
-                    h('div', {
-                        class: 'current-color', 
-                        style: {
-                            background: color.hex(),
-                            borderColor: this.props.color
+                    h(PaletteColor, {
+                        tagName: 'div',
+                        color: color.hex(),
+                        cache: false,
+                        innerProps: {
+                            class: 'current-color',
+                            style: {borderColor: this.props.color}
                         }
-                    })
+                    }),
+
+                    h('a', 
+                        {
+                            class: 'open',
+                            href: '#',
+                            title: 'Eyedropper',
+                            onClick: this.handleEyedropperClick
+                        },
+
+                        h('img', {
+                            src: './img/eyedropper.svg',
+                            alt: 'Eyedropper',
+                            width: 16,
+                            height: 16
+                        })
+                    )
                 ),
 
                 h('ul', {class: 'codes'},

@@ -361,7 +361,26 @@
     .color-picker .eyedropper {
         float: left;
         margin: 1em;
+        margin-top: calc(1em + 8px);
         width: 50px;
+    }
+    .color-picker .eyedropper .open {
+        display: table;
+        margin: 7px auto;
+        padding: 7px;
+        border-radius: 50%;
+        transition: background .2s;
+    }
+    .color-picker .eyedropper .open:hover,
+    .color-picker .eyedropper .open:focus {
+        background: #ddd;
+    }
+    .color-picker .eyedropper .open:active {
+        background: #ccc;
+    }
+    .color-picker .eyedropper .open img {
+        display: block;
+        opacity: .8;
     }
     .color-picker .current-color {
         border: 7px solid #999;
@@ -380,7 +399,7 @@
         background: #bbb;
     }
     .color-picker .codes > li.flash input:nth-child(3) {
-        transition-delay: .135s;
+        transition-delay: .12s;
     }
     .color-picker .codes > li.flash input:nth-child(4) {
         transition-delay: .2s;
