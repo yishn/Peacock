@@ -62,7 +62,6 @@ exports.showEyedropper = function(callback = () => {}) {
         frame: false,
         parent: parentWindow,
         modal: true,
-        transparent: true,
         webPreferences: {
             nodeIntegrationInWorker: true
         }
@@ -73,10 +72,6 @@ exports.showEyedropper = function(callback = () => {}) {
     }
 
     ipcMain.once(eventName, (evt, arg) => callback(arg))
-
-    window.once('ready-to-show', () => {
-        window.show()
-    })
 
     window.once('closed', () => {
         delete windows[currentId]
