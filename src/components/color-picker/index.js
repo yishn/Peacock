@@ -1,4 +1,4 @@
-import {clipboard} from 'electron'
+import {clipboard, remote} from 'electron'
 import chroma from 'chroma-js'
 import classNames from 'classnames'
 import {h, Component} from 'preact'
@@ -7,6 +7,8 @@ import mutate from '../../renderer/mutate'
 import FlashableComponent from '../helper/FlashableComponent'
 import ColorWheel from './ColorWheel'
 import {PaletteColor} from '../Palette'
+
+const {showEyedropper} = remote.require('./color-picker')
 
 function chroma2hsl(color) {
     let [h, s, l] = color.hsl()
@@ -220,6 +222,12 @@ export default class ColorPicker extends Component {
 
         this.handleEyedropperClick = evt => {
             evt.preventDefault()
+
+            showEyedropper(result => {
+                if (result.color == null) return
+
+                this.setState({color: chroma2hsl(chroma(result.color))})
+            })
         }
     }
 

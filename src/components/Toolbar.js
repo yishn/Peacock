@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import {h} from 'preact'
-import Component from './PureComponent'
+import Component from './helper/PureComponent'
 
 export default class Toolbar extends Component {
     render() {

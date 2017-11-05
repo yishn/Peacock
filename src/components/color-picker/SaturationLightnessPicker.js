@@ -1,6 +1,6 @@
 import chroma from 'chroma-js'
 import {h} from 'preact'
-import Component from '../PureComponent'
+import Component from '../helper/PureComponent'
 
 const heightScale = Math.sqrt(3) / 2
 const padding = 12

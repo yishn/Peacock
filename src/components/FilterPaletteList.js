@@ -2,7 +2,7 @@ import chroma from 'chroma-js'
 import {h} from 'preact'
 import comprehend, {from, where, range} from '../renderer/comprehension'
 
-import Component from './PureComponent'
+import Component from './helper/PureComponent'
 import PaletteList from './PaletteList'
 
 function getHueDistance(color1, color2) {

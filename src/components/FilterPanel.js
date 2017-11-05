@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import chroma from 'chroma-js'
 import {h} from 'preact'
-import Component from './PureComponent'
+import Component from './helper/PureComponent'
 
 export default class FilterPanel extends Component {
     constructor(props) {

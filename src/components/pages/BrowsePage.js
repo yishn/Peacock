@@ -1,8 +1,7 @@
 import {h} from 'preact'
-import Component from '../PureComponent'
-
 import mutate from '../../renderer/mutate'
 
+import Component from '../helper/PureComponent'
 import Page from './Page'
 import FilterPanel from '../FilterPanel'
 import FilterPaletteList from '../FilterPaletteList'

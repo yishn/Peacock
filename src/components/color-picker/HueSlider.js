@@ -1,6 +1,6 @@
 import chroma from 'chroma-js'
 import {h} from 'preact'
-import Component from '../PureComponent'
+import Component from '../helper/PureComponent'
 
 const hueSteps = 12
 const tau = 2 * Math.PI

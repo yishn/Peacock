@@ -1,8 +1,7 @@
 import {h} from 'preact'
-import Component from '../PureComponent'
-
 import mutate from '../../renderer/mutate'
 
+import Component from '../helper/PureComponent'
 import SaturationLightnessPicker from './SaturationLightnessPicker'
 import HueSlider from './HueSlider'
 

@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import {h} from 'preact'
-import Component from './PureComponent'
+import Component from './helper/PureComponent'
 import {MiniPalette} from './Palette'
 
 export class PaletteListItem extends Component {

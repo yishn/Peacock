@@ -1,9 +1,9 @@
 import {clipboard, remote} from 'electron'
 import chroma from 'chroma-js'
 import {h} from 'preact'
-import Component from '../PureComponent'
 import * as dialog from '../../renderer/dialog'
 
+import Component from '../helper/PureComponent'
 import FlashableComponent from '../helper/FlashableComponent'
 import Page from './Page'
 import Palette from '../Palette'
