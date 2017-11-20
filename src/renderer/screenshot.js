@@ -8,22 +8,21 @@ export function take() {
     return new Promise((resolve, reject) => {
         desktopCapturer.getSources({types: ['screen']}, (err, sources) => {
             if (err) return reject(err)
-
-            navigator.webkitGetUserMedia({
-                audio: false,
-                video: {
-                    mandatory: {
-                        chromeMediaSource: 'desktop',
-                        chromeMediaSourceId: sources[displayIndex].id,
-                        minWidth: width,
-                        maxWidth: width,
-                        minHeight: height,
-                        maxHeight: height
-                    }
-                }
-            }, resolve, reject)
+            resolve(sources)
         })
-    }).then(stream => new Promise(resolve =>{
+    }).then(sources => navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+            mandatory: {
+                chromeMediaSource: 'desktop',
+                chromeMediaSourceId: sources[displayIndex].id,
+                minWidth: width,
+                maxWidth: width,
+                minHeight: height,
+                maxHeight: height
+            }
+        }
+    })).then(stream => new Promise(resolve => {
         let video = document.createElement('video')
 
         video.autoplay = true
