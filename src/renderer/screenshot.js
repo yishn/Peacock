@@ -1,6 +1,6 @@
 import {desktopCapturer, screen} from 'electron'
 
-function getStream() {
+export function take() {
     let display = screen.getPrimaryDisplay()
     let displayIndex = screen.getAllDisplays().findIndex(item => item.id === display.id)
     let {width, height} = display.size
@@ -39,10 +39,6 @@ function getStream() {
         let context = canvas.getContext('2d')
         context.drawImage(video, 0, 0)
 
-        return canvas.toDataURL()
+        return canvas
     })
-}
-
-export function take() {
-    return getStream()
 }

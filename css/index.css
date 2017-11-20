@@ -469,14 +469,11 @@
         left: 0;
         width: 100%;
         height: 100%;
-        cursor: url('../img/eyedropper-cursor.png') 16 16, auto;
+        cursor: crosshair;
     }
-    #eyedropper .crosshair {
+    #eyedropper .color {
         position: absolute;
         width: 70px;
         height: 70px;
-        background: red;
-        background-size: cover;
-        image-rendering: pixelated;
         pointer-events: none;
 }

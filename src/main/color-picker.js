@@ -60,6 +60,7 @@ exports.showEyedropper = function(callback = () => {}) {
         title: 'Eyedropper',
         show: false,
         frame: false,
+        transparent: true,
         parent: parentWindow,
         modal: true,
         webPreferences: {

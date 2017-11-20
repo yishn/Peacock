@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
-import {screen, remote} from 'electron'
-import * as screenshot from '../../renderer/screenshot'
+import {screen, nativeImage, remote} from 'electron'
+import {take as takeScreenshot} from '../../renderer/screenshot'
 
 export default class Eyedropper extends Component {
     constructor() {
@@ -12,23 +12,35 @@ export default class Eyedropper extends Component {
         this.state = {
             screenshot: null,
             mousePosition: null,
-            magnifiedImage: null
+            color: null
         }
 
         this.handleMouseMove = evt => {
+            if (this.screenshotData == null) return
+
             let mousePosition = [evt.clientX, evt.clientY]
+            let i = (evt.clientY * this.width + evt.clientX) * 4
+            let colorData = this.screenshotData.slice(i, i + 3)
 
-            this.setState({mousePosition})
+            this.setState({
+                mousePosition,
+                color: `rgb(${colorData.join(', ')})`
+            })
         }
-
-        screenshot.take().then(res => {
-            this.setState({screenshot: res})
-            this.window.show()
-        })
     }
 
     componentDidMount() {
         document.addEventListener('mousemove', this.handleMouseMove)
+
+        this.window.show()
+
+        takeScreenshot().then(canvas => {
+            this.width = canvas.width
+            this.height = canvas.height
+            this.screenshotData = canvas.getContext('2d').getImageData(0, 0, this.width, this.height).data
+
+            this.setState({screenshot: canvas.toDataURL()})
+        })
     }
 
     componentWillUnmount() {
@@ -36,20 +48,25 @@ export default class Eyedropper extends Component {
     }
 
     render() {
+        let {screenshot, mousePosition, color} = this.state
+
         return h('section', 
             {
                 id: 'eyedropper',
                 style: {
-                    backgroundImage: `url(${this.state.screenshot})`
+                    cursor: screenshot == null ? 'none' : null,
+                    backgroundImage: screenshot != null && `url('${screenshot}')`
                 }
             },
 
-            this.state.mousePosition && h('section', {
-                class: 'crosshair',
+            screenshot != null 
+            && mousePosition != null 
+            && h('section', {
+                class: 'color',
                 style: {
-                    backgroundImage: `url(${this.state.magnifiedImage})`,
-                    left: this.state.mousePosition[0] + 8,
-                    top: this.state.mousePosition[1] + 8
+                    backgroundColor: color,
+                    left: mousePosition[0] + 8,
+                    top: mousePosition[1] + 8
                 }
             })
         )
