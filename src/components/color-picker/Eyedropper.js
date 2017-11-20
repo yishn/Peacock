@@ -1,5 +1,6 @@
-import {h, Component} from 'preact'
 import {screen, nativeImage, remote} from 'electron'
+import chroma from 'chroma-js'
+import {h, Component} from 'preact'
 import {take as takeScreenshot} from '../../renderer/screenshot'
 
 export default class Eyedropper extends Component {
@@ -26,6 +27,12 @@ export default class Eyedropper extends Component {
                 mousePosition,
                 color: `rgb(${colorData.join(', ')})`
             })
+        }
+
+        this.handleClick = evt => {
+            let {onSubmit = () => {}} = this.props
+            
+            onSubmit({color: chroma(this.state.color).hex()})
         }
     }
 
@@ -56,7 +63,8 @@ export default class Eyedropper extends Component {
                 style: {
                     cursor: screenshot == null ? 'none' : null,
                     backgroundImage: screenshot != null && `url('${screenshot}')`
-                }
+                },
+                onClick: this.handleClick
             },
 
             screenshot != null 
