@@ -65,8 +65,8 @@ export default class Eyedropper extends Component {
                 class: 'color',
                 style: {
                     backgroundColor: color,
-                    left: mousePosition[0] + 8,
-                    top: mousePosition[1] + 8
+                    left: mousePosition[0],
+                    top: mousePosition[1]
                 }
             })
         )

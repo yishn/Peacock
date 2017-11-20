@@ -473,7 +473,10 @@
     }
     #eyedropper .color {
         position: absolute;
+        border: 2px solid white;
+        border-radius: 50%;
         width: 70px;
         height: 70px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, .7);
         pointer-events: none;
 }
